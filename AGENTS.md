@@ -15,7 +15,6 @@ Cada sistema deve ficar em um diretório próprio dentro de `projects/`. Todo re
 - Nunca altere um repositório diferente daquele solicitado pelo usuário.
 - Considere apenas os repositórios localizados em `projects/` como projetos gerenciados por este workspace.
 - Antes de trabalhar em um projeto, identifique o diretório correspondente dentro de `projects/` e leia o `AGENTS.md` local, se existir.
-- Verifique se o projeto contém a pasta `documentation/`. Em projetos novos, crie essa pasta e adicione nela um `README.md` com uma pequena descrição informando que se trata da pasta de documentação do projeto.
 - Leia a documentação daquele repositório na pasta `documentation/`.
 - De preferência para ler indices de documentação antes de sair varrendo todo o repositório e assim otimizar o contexto e tokens.
 - Se o projeto não tiver um `AGENTS.md`, sugira a criação desse arquivo de contexto, mas isso não deve impedir o trabalho.
@@ -27,10 +26,9 @@ Cada sistema deve ficar em um diretório próprio dentro de `projects/`. Todo re
 1. Identificar os projetos solicitados em `projects/`.
 2. Ler as instruções deste workspace e o `AGENTS.md` específico do projeto, se disponível.
 3. Inspecionar a estrutura e as configurações relevantes antes de fazer alterações.
-4. Garantir que a pasta `documentation/` exista; se for um projeto novo, criar também seu `README.md` descritivo.
-5. Declarar suposições importantes quando elas afetarem a implementação.
-6. Implementar somente o escopo solicitado.
-7. Executar verificações e testes adequados ao projeto, quando disponíveis, e relatar os resultados.
+4. Declarar suposições importantes quando elas afetarem a implementação.
+5. Implementar somente o escopo solicitado.
+6. Executar verificações e testes adequados ao projeto, quando disponíveis, e relatar os resultados.
 
 ## Convenções para novos projetos
 
