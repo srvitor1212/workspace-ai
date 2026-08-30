@@ -1,4 +1,4 @@
-# Codex Workspace
+# Workspace de AI
 
 Este repositório é um workspace genérico para apoiar o desenvolvimento em múltiplos sistemas.
 
@@ -16,6 +16,8 @@ Cada sistema deve ficar em um diretório próprio dentro de `projects/`. Todo re
 - Considere apenas os repositórios localizados em `projects/` como projetos gerenciados por este workspace.
 - Antes de trabalhar em um projeto, identifique o diretório correspondente dentro de `projects/` e leia o `AGENTS.md` local, se existir.
 - Verifique se o projeto contém a pasta `documentation/`. Em projetos novos, crie essa pasta e adicione nela um `README.md` com uma pequena descrição informando que se trata da pasta de documentação do projeto.
+- Leia a documentação daquele repositório na pasta `documentation/`.
+- De preferência para ler indices de documentação antes de sair varrendo todo o repositório e assim otimizar o contexto e tokens.
 - Se o projeto não tiver um `AGENTS.md`, sugira a criação desse arquivo de contexto, mas isso não deve impedir o trabalho.
 - Não adivinhe caminhos de projetos fora de `projects/`. Se o projeto solicitado não estiver lá, peça ao usuário que o disponibilize nesse diretório ou informe o caminho correto.
 - Preserve alterações existentes feitas pelo usuário e evite modificar arquivos fora do escopo solicitado.
