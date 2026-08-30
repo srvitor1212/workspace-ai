@@ -6,7 +6,7 @@ Este repositório é um workspace genérico para apoiar o desenvolvimento em mú
 
 - `AGENTS.md`: instruções gerais para a IA trabalhar neste workspace.
 - `projects/`: diretório reservado para os repositórios de software usados no workspace.
-- `.codex/`: configurações, scripts e recursos auxiliares do workspace.
+- `.agent/`: configurações, scripts e recursos auxiliares do workspace.
 
 Cada sistema deve ficar em um diretório próprio dentro de `projects/`. Todo repositório deve conter uma pasta `documentation/` para os documentos do projeto. Por exemplo: `projects/meu-app/documentation/`. O contexto específico de cada sistema deve ser documentado no `AGENTS.md` desse repositório, quando existir.
 
@@ -24,7 +24,7 @@ Cada sistema deve ficar em um diretório próprio dentro de `projects/`. Todo re
 
 ## Fluxo de trabalho
 
-1. Identificar o projeto solicitado em `projects/`.
+1. Identificar os projetos solicitados em `projects/`.
 2. Ler as instruções deste workspace e o `AGENTS.md` específico do projeto, se disponível.
 3. Inspecionar a estrutura e as configurações relevantes antes de fazer alterações.
 4. Garantir que a pasta `documentation/` exista; se for um projeto novo, criar também seu `README.md` descritivo.
