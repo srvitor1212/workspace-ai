@@ -15,6 +15,7 @@ Cada sistema deve ficar em um diretório próprio dentro de `projects/`. Todo re
 - Nunca altere um repositório diferente daquele solicitado pelo usuário.
 - Considere apenas os repositórios localizados em `projects/` como projetos gerenciados por este workspace.
 - Antes de trabalhar em um projeto, identifique o diretório correspondente dentro de `projects/` e leia o `AGENTS.md` local, se existir.
+- Localize as skills disponíveis no workspace em `.agent/skills/*/SKILL.md` e, antes de executar uma tarefa, leia integralmente as instruções das skills aplicáveis ao pedido do usuário.
 - Leia a documentação daquele repositório na pasta `documentation/`.
 - De preferência para ler indices de documentação antes de sair varrendo todo o repositório e assim otimizar o contexto e tokens.
 - Se o projeto não tiver um `AGENTS.md`, sugira a criação desse arquivo de contexto, mas isso não deve impedir o trabalho.
