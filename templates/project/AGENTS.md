@@ -13,7 +13,14 @@
 - Entrypoints: <!-- caminhos -->
 - Código principal: <!-- caminhos -->
 - Testes: <!-- caminhos -->
-- Documentação: <!-- caminhos -->
+- Índice de documentação: `README-CODEX.md` <!-- ou outro índice leve já adotado -->
+
+## Descoberta de documentação
+
+- Consulte o índice somente quando a tarefa depender de contexto documental.
+- Use o índice para escolher documentos por tema; não leia `docs/` inteiro como preparação padrão.
+- Se o índice não cobrir a pergunta, busque nomes, títulos ou termos e abra somente os documentos candidatos.
+- Ao criar, mover ou remover documentação, atualize o índice sem copiar para ele o conteúdo dos documentos.
 
 ## Comandos verificados
 

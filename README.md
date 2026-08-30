@@ -40,7 +40,7 @@ As responsabilidades são separadas deliberadamente:
 
 - `AGENTS.md` define como o Codex deve se comportar neste workspace.
 - `.agents/skills/` descreve como executar categorias específicas de tarefa.
-- `templates/project/` ajuda cada projeto a manter seu próprio contexto.
+- `templates/project/` ajuda cada projeto a manter suas instruções e um índice leve de contexto e documentação.
 - `scripts/` contém somente automação determinística útil ao workspace.
 - `projects/` contém repositórios independentes e nunca é fonte de regras globais.
 
@@ -83,7 +83,7 @@ Para preparar um projeto novo:
 1. Adicione o repositório em `projects/<nome>`.
 2. Verifique se ele já possui `AGENTS.md`, `AGENTS.override.md` ou documentação equivalente.
 3. Se precisar de instruções próprias, adapte `templates/project/AGENTS.md` dentro do projeto. Não sobrescreva um arquivo existente; mescle apenas o que for compatível.
-4. Use `templates/project/README-CODEX.md` como checklist para comandos, entrypoints e restrições verificadas.
+4. Use `templates/project/README-CODEX.md` como índice leve para comandos, entrypoints, restrições e rotas de documentação verificadas.
 5. Mantenha todas as informações da aplicação dentro do repositório da aplicação.
 
 Não é necessário cadastrar projetos em um índice central. O caminho explícito no prompt é o seletor de escopo e reduz o risco de contexto cruzado.
@@ -99,6 +99,30 @@ Por padrão, o Codex deve trabalhar em um único projeto ativo. O `AGENTS.md` da
 - separe evidências e comandos quando vários projetos forem explicitamente autorizados.
 
 Se o prompt não identificar o projeto com segurança, o Codex deve pedir o caminho em vez de explorar todos os diretórios.
+
+## Carregamento progressivo de contexto
+
+O workspace evita pré-carregar conteúdo que talvez não participe da tarefa.
+
+### Skills
+
+O catálogo nativo do Codex — `name`, `description` e caminho — já funciona como índice. O `AGENTS.md` proíbe percorrer `.agents/skills/` ou abrir todos os `SKILL.md` para escolher uma skill. Primeiro ocorre o roteamento pela descrição; depois somente as skills selecionadas são carregadas por completo. Recursos internos como `references/` e `scripts/` também são lidos apenas quando o `SKILL.md` escolhido os indicar.
+
+Não existe um `skills-index.md` adicional porque ele duplicaria o frontmatter e poderia ficar desatualizado.
+
+### Documentação dos projetos
+
+Cada projeto pode usar `README-CODEX.md` como índice fino. Ele deve conter contexto operacional curto e uma tabela com tema, caminho, quando consultar e fonte de verdade. O conteúdo detalhado continua em `README.md`, `docs/` ou nos documentos já adotados pelo projeto.
+
+Quando uma tarefa depender de documentação, o Codex deve:
+
+1. operar somente no projeto ativo;
+2. consultar um único índice declarado pelo projeto, preferindo `README-CODEX.md`, `docs/README.md` ou `docs/index.md`;
+3. abrir somente os documentos relacionados ao tema;
+4. se não houver índice, listar nomes ou buscar títulos e termos antes de abrir arquivos completos;
+5. ampliar a leitura apenas para resolver uma lacuna concreta.
+
+Uma leitura completa da árvore documental só é apropriada quando o usuário pedir explicitamente inventário, reorganização ou auditoria de toda a documentação. O índice orienta a descoberta, mas afirmações importantes continuam sendo verificadas no código, configuração ou testes.
 
 ## Resolução de instruções
 
@@ -131,7 +155,7 @@ A documentação oficial também sugere verificar o workspace root reportado pel
 
 ## Agent Skills
 
-O Codex descobre skills locais em `.agents/skills` do diretório atual até o repository root. Inicialmente, somente `name`, `description` e caminho participam da descoberta; o conteúdo completo de `SKILL.md` é carregado quando a skill é selecionada. Isso mantém baixo o custo de contexto.
+O Codex descobre skills locais em `.agents/skills` do diretório atual até o repository root. Inicialmente, somente `name`, `description` e caminho participam da descoberta; o conteúdo completo de `SKILL.md` é carregado quando a skill é selecionada. Esse catálogo nativo é o único índice de skills mantido pelo workspace.
 
 Uma skill pode ser ativada implicitamente pela descrição ou explicitamente com `$nome`:
 
@@ -226,6 +250,7 @@ Outras extensões atuais — plugins, MCP, hooks, Record & Replay, subagentes e 
 
 - Nomeie o projeto e o resultado desejado no prompt.
 - Mantenha comandos e convenções específicos no `AGENTS.md` do próprio projeto.
+- Use `README-CODEX.md` como mapa curto e abra documentos detalhados somente quando o tema exigir.
 - Prefira busca direcionada a leitura recursiva ampla.
 - Preserve mudanças locais e revise o diff antes de concluir.
 - Execute validações existentes, começando pelas mais próximas da mudança.

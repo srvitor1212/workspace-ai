@@ -15,6 +15,15 @@
 - Antes de inspecionar codigo do projeto ativo, leia as instrucoes aplicaveis dentro dele. Para cada diretorio relevante, prefira `AGENTS.override.md` a `AGENTS.md`, use no maximo um desses arquivos por nivel e considere a instrucao mais proxima do arquivo-alvo como a mais especifica.
 - Uma sessao iniciada na raiz deste workspace nao descobre automaticamente instrucoes abaixo do diretorio atual. Por isso, localize os arquivos de instrucao somente dentro do projeto ativo e leia os que se aplicam antes de trabalhar.
 
+## Carregamento progressivo de contexto
+
+- Trate o catalogo de skills disponivel na sessao — nome, descricao e caminho — como o indice de skills. Nao percorra `.agents/skills/` nem leia todos os `SKILL.md` para decidir qual usar.
+- Selecione pela descricao somente a skill ou a menor combinacao de skills necessaria e entao leia por completo os respectivos `SKILL.md`. Leia `references/`, `scripts/` ou outros recursos de uma skill somente quando o `SKILL.md` selecionado indicar sua relevancia para a tarefa.
+- Nunca carregue documentacao de projetos inativos. No projeto ativo, nao leia recursivamente `docs/` nem todos os arquivos Markdown para formar contexto inicial, salvo quando o usuario pedir explicitamente um inventario ou auditoria documental completa.
+- Quando a tarefa depender de documentacao, consulte primeiro um unico indice leve indicado pelas instrucoes do projeto, preferencialmente `README-CODEX.md`, `docs/README.md` ou `docs/index.md`. Use o indice apenas para escolher os poucos documentos relacionados a pergunta.
+- Se nao existir indice, liste nomes de arquivos ou busque titulos e termos relevantes somente dentro do projeto ativo; abra o menor conjunto de documentos capaz de responder a solicitacao e amplie uma lacuna por vez.
+- Trate documentacao como guia, nao como prova final. Confirme no codigo, configuracao ou testes as afirmacoes que afetarem uma analise ou mudanca.
+
 ## Forma de trabalhar
 
 - Aplique profundidade proporcional a tarefa. Em tarefas simples, avance sem criar cerimonia desnecessaria.
@@ -31,15 +40,3 @@
 - Nao exponha secrets em arquivos, comandos, logs ou respostas.
 - Antes de operacoes de alto impacto ou intencao ambigua — exclusao em massa, migracao destrutiva, infraestrutura, secrets, CI/CD, publicacao, deploy ou force push — pare e solicite autorizacao.
 - Nunca descarte trabalho, reescreva historico ou execute operacoes Git destrutivas sem pedido explicito.
-
-## Skills disponiveis
-
-- Use a skill cujo `description` corresponda a tarefa, inclusive por invocacao explicita com `$nome-da-skill`.
-- `repository-analysis`: compreender um projeto sem modifica-lo.
-- `implementation-plan`: produzir um plano tecnico executavel.
-- `implement-change`: implementar funcionalidade, refatoracao ou correcao cuja causa ja esteja entendida.
-- `debugging`: investigar sintomas, evidencias e causa raiz; corrigir somente quando solicitado.
-- `code-review`: revisar um diff ou conjunto de mudancas sem editar por padrao.
-- `testing`: analisar, criar ou executar testes com o framework existente.
-- `documentation`: criar ou atualizar documentacao verificada dentro do projeto ativo.
-- Carregue apenas as skills necessarias para a solicitacao atual.

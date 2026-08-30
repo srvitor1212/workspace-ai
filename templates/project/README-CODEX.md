@@ -1,6 +1,13 @@
-# Guia do projeto para Codex
+# Índice de contexto do projeto para Codex
 
-Este documento registra contexto operacional útil para trabalhar neste projeto com Codex. Mantenha aqui somente informações específicas deste repositório e verificadas na implementação.
+Este é o mapa leve de contexto e documentação deste projeto. Mantenha aqui somente informações específicas e verificadas, com links para as fontes detalhadas em vez de copiar seu conteúdo.
+
+## Como usar este índice
+
+- Consulte este arquivo quando a tarefa precisar de orientação sobre arquitetura, operação ou documentação.
+- Abra somente os documentos indicados para o tema da tarefa.
+- Não percorra toda a documentação como preparação padrão.
+- Se uma informação do índice afetar uma mudança, confirme-a no código, configuração ou testes.
 
 ## Visão geral
 
@@ -38,7 +45,16 @@ Este documento registra contexto operacional útil para trabalhar neste projeto 
 - Entrypoints: <!-- caminhos -->
 - Módulos principais: <!-- caminhos e responsabilidade -->
 - Persistência e integrações: <!-- componentes verificados -->
-- Documentação adicional: <!-- links relativos -->
+
+## Índice de documentação
+
+Mantenha uma linha por tema. O campo "Quando consultar" deve permitir decidir se o documento é relevante antes de abri-lo.
+
+| Tema | Caminho | Quando consultar | Fonte de verdade |
+| --- | --- | --- | --- |
+| `<tema>` | [`<documento>`](<caminho-relativo>) | `<tipo de tarefa ou dúvida>` | `<código, contrato, configuração ou documento>` |
+
+Não liste arquivos temporários, gerados ou sem utilidade para decisões. Se o projeto já adota outro índice, aponte para ele aqui em vez de manter dois catálogos.
 
 ## Restrições conhecidas
 
@@ -46,4 +62,4 @@ Este documento registra contexto operacional útil para trabalhar neste projeto 
 
 ## Manutenção deste documento
 
-Atualize este guia quando comandos, estrutura ou restrições mudarem. Se uma informação não puder ser confirmada no código ou no ambiente, marque-a como pendente em vez de apresentá-la como fato.
+Atualize este índice quando comandos, estrutura, restrições ou caminhos documentais mudarem. Se uma informação não puder ser confirmada no código ou no ambiente, marque-a como pendente em vez de apresentá-la como fato.
