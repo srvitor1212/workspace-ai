@@ -1,29 +1,23 @@
 ---
 name: implement-change
-description: "Implemente uma mudanca de software ja definida, incluindo funcionalidade, refatoracao focada ou correcao com causa conhecida. Use para editar e validar codigo; use debugging primeiro quando a causa do problema ainda for incerta."
+description: "Implemente e valide funcionalidade, refatoracao focada ou correcao definida. Use debugging primeiro se a causa for incerta."
 ---
 
 # Implementar mudanca
 
-Entregue a menor alteracao completa que satisfaca o pedido e se integre ao projeto ativo.
+Entregue a menor alteracao completa e coerente com o projeto ativo.
 
-## Workflow
+## Processo
 
-1. Confirme o comportamento esperado, o limite da mudanca e as instrucoes aplicaveis.
-2. Inspecione o estado do Git e a implementacao, testes e contratos diretamente relacionados. Preserve trabalho local existente.
-3. Escolha uma abordagem compativel com os padroes atuais e explicite apenas decisoes ou riscos relevantes.
-4. Edite de forma incremental. Evite dependencias novas, abstracoes especulativas e limpeza sem relacao com o pedido.
-5. Adicione ou ajuste testes quando o comportamento mudou e houver uma forma estavel de protege-lo.
-6. Execute primeiro testes ou verificacoes direcionadas; amplie para build, lint, tipos ou suites maiores conforme o risco.
-7. Revise o diff em busca de mudancas acidentais, incompatibilidades, tratamento de erros e documentacao afetada.
+1. Confirme comportamento, escopo e instrucoes; inspecione Git, codigo, testes e contratos relacionados sem perder trabalho local.
+2. Escolha a menor abordagem compativel e explicite apenas decisoes ou riscos relevantes.
+3. Edite incrementalmente, sem dependencias, abstracoes ou limpeza alheias.
+4. Proteja comportamentos alterados com testes estaveis quando pratico.
+5. Execute primeiro verificacoes direcionadas e amplie para build, lint, tipos ou suites conforme o risco.
+6. Revise o diff por mudancas acidentais, incompatibilidades, erros e documentacao afetada.
 
-Se uma validacao falhar, determine se a falha foi introduzida pela mudanca antes de ampliar o escopo. Nao corrija problemas preexistentes sem autorizacao; registre-os separadamente.
+Classifique falhas como introduzidas ou preexistentes; nao corrija estas sem autorizacao.
 
-## Conclusao
+## Entrega
 
-Informe:
-
-- comportamento implementado e principais arquivos alterados;
-- validacoes executadas e seus resultados;
-- validacoes nao executadas e o motivo;
-- riscos residuais, suposicoes ou proximos passos realmente necessarios.
+Relate comportamento e arquivos alterados, validacoes e resultados, omissoes justificadas e riscos ou proximos passos necessarios.

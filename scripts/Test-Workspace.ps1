@@ -140,15 +140,52 @@ $hooksFile = Join-Path $resolvedRoot '.codex/hooks.json'
 if (Test-Path -LiteralPath $hooksFile -PathType Leaf) {
     try {
         $hooksConfig = Get-Content -Raw -LiteralPath $hooksFile | ConvertFrom-Json
-        if ($null -eq $hooksConfig.hooks.SessionStart) {
-            Add-ValidationFailure 'Missing SessionStart chat-memory hook.'
-        }
-        if ($null -eq $hooksConfig.hooks.PreCompact) {
-            Add-ValidationFailure 'Missing PreCompact chat-memory hook.'
+        $expectedHooks = @(
+            @{ Event = 'SessionStart'; Matcher = '^(startup|resume|clear|compact)$' },
+            @{ Event = 'PreCompact'; Matcher = '^(manual|auto)$' }
+        )
+
+        foreach ($expected in $expectedHooks) {
+            $eventProperty = $hooksConfig.hooks.PSObject.Properties[$expected.Event]
+            $validDefinition = $false
+            if ($null -ne $eventProperty) {
+                foreach ($group in @($eventProperty.Value)) {
+                    if ($group.matcher -ne $expected.Matcher) {
+                        continue
+                    }
+
+                    foreach ($handler in @($group.hooks)) {
+                        if ($handler.type -eq 'command' -and
+                            [string]$handler.command -match 'chat-memory\.ps1' -and
+                            [string]$handler.commandWindows -match 'chat-memory\.ps1') {
+                            $validDefinition = $true
+                        }
+                    }
+                }
+            }
+
+            if (-not $validDefinition) {
+                Add-ValidationFailure "Invalid $($expected.Event) chat-memory hook."
+            }
         }
     }
     catch {
         Add-ValidationFailure "Invalid .codex/hooks.json: $($_.Exception.Message)"
+    }
+}
+
+$hookScriptFile = Join-Path $resolvedRoot '.codex/hooks/chat-memory.ps1'
+if (Test-Path -LiteralPath $hookScriptFile -PathType Leaf) {
+    $parseTokens = $null
+    $parseErrors = $null
+    [System.Management.Automation.Language.Parser]::ParseFile(
+        $hookScriptFile,
+        [ref]$parseTokens,
+        [ref]$parseErrors
+    ) | Out-Null
+
+    foreach ($parseError in @($parseErrors)) {
+        Add-ValidationFailure "Invalid chat-memory.ps1: $($parseError.Message)"
     }
 }
 

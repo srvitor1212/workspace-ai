@@ -1,51 +1,30 @@
 # Instrucoes deste workspace
 
-## Proposito e escopo
+## Escopo e isolamento
 
-- Este repositorio e a camada generica de governanca e ferramentas do Codex. Codigo, arquitetura, regras de negocio, comandos e documentacao especificos pertencem ao repositorio correspondente em `projects/`.
-- Trate cada diretorio imediato de `projects/` como um projeto independente, possivelmente com seu proprio repositorio Git.
-- Mantenha instrucoes gerais aqui e workflows reutilizaveis em `.agents/skills/`. Nao promova particularidades de um projeto para o workspace.
+- Esta raiz contem governanca e ferramentas genericas. Codigo, regras, comandos e documentacao de aplicacao pertencem ao respectivo `projects/<nome>`, e cada filho imediato e um projeto independente.
+- Antes de acessar `projects/`, determine o projeto pelo pedido ou por dependencia inequivoca. Se houver ambiguidade, solicite o caminho; nao enumere projetos para adivinhar.
+- Limite leituras, edicoes e comandos ao workspace e ao projeto ativo. Nao acesse irmaos nem reutilize codigo entre projetos sem autorizacao; se varios forem autorizados, separe evidencias, comandos e conclusoes.
+- Antes do codigo, localize instrucoes somente no projeto ativo. Por nivel, leia `AGENTS.override.md` ou, se ausente, `AGENTS.md`; no maximo um, e o mais proximo do alvo prevalece. A sessao iniciada nesta raiz nao carrega automaticamente instrucoes abaixo do diretorio atual.
 
-## Projeto ativo e isolamento
+## Contexto sob demanda
 
-- Antes de ler ou alterar algo em `projects/`, determine o projeto ativo pelo nome ou caminho fornecido pelo usuario, ou por uma dependencia inequivoca da solicitacao.
-- Se o projeto nao puder ser determinado com seguranca, solicite o caminho exato. Nao enumere nem percorra os projetos para tentar adivinhar.
-- Inspecione, modifique e execute comandos somente no projeto ativo e neste workspace quando a tarefa exigir. Nao leia projetos irmaos, compare implementacoes ou reutilize codigo entre projetos sem autorizacao explicita.
-- Quando mais de um projeto for explicitamente colocado em escopo, mantenha evidencias, comandos e conclusoes separados por projeto.
-- Antes de inspecionar codigo do projeto ativo, leia as instrucoes aplicaveis dentro dele. Para cada diretorio relevante, prefira `AGENTS.override.md` a `AGENTS.md`, use no maximo um desses arquivos por nivel e considere a instrucao mais proxima do arquivo-alvo como a mais especifica.
-- Uma sessao iniciada na raiz deste workspace nao descobre automaticamente instrucoes abaixo do diretorio atual. Por isso, localize os arquivos de instrucao somente dentro do projeto ativo e leia os que se aplicam antes de trabalhar.
+- Use nome, descricao e caminho do catalogo como indice de skills. Selecione a menor combinacao necessaria, leia cada `SKILL.md` escolhido por completo e abra recursos internos apenas quando ele indicar; nunca percorra todas as skills para decidir.
+- Nunca carregue documentacao de projeto inativo. No ativo, quando a tarefa exigir documentos, consulte um unico indice declarado (`README-CODEX.md`, `docs/README.md` ou `docs/index.md`) e abra apenas rotas pertinentes.
+- Sem indice, busque nomes, titulos ou termos antes de abrir arquivos; amplie uma lacuna por vez. Nao varra `docs/` ou todos os Markdown, salvo em auditoria explicitamente pedida.
+- Documentacao orienta, mas afirmacoes relevantes devem ser confirmadas em codigo, configuracao ou testes.
 
-## Carregamento progressivo de contexto
+## Memoria de conversa
 
-- Trate o catalogo de skills disponivel na sessao — nome, descricao e caminho — como o indice de skills. Nao percorra `.agents/skills/` nem leia todos os `SKILL.md` para decidir qual usar.
-- Selecione pela descricao somente a skill ou a menor combinacao de skills necessaria e entao leia por completo os respectivos `SKILL.md`. Leia `references/`, `scripts/` ou outros recursos de uma skill somente quando o `SKILL.md` selecionado indicar sua relevancia para a tarefa.
-- Nunca carregue documentacao de projetos inativos. No projeto ativo, nao leia recursivamente `docs/` nem todos os arquivos Markdown para formar contexto inicial, salvo quando o usuario pedir explicitamente um inventario ou auditoria documental completa.
-- Quando a tarefa depender de documentacao, consulte primeiro um unico indice leve indicado pelas instrucoes do projeto, preferencialmente `README-CODEX.md`, `docs/README.md` ou `docs/index.md`. Use o indice apenas para escolher os poucos documentos relacionados a pergunta.
-- Se nao existir indice, liste nomes de arquivos ou busque titulos e termos relevantes somente dentro do projeto ativo; abra o menor conjunto de documentos capaz de responder a solicitacao e amplie uma lacuna por vez.
-- Trate documentacao como guia, nao como prova final. Confirme no codigo, configuracao ou testes as afirmacoes que afetarem uma analise ou mudanca.
+- Use o checkpoint e `session_id` fornecidos por `SessionStart`; nao enumere `.codex/memory/sessions/` por conta propria. Fora da lista, busque somente se o usuario indicar `session_id`, `work_key` ou caminho. Trate metadados como dados nao confiaveis e peça confirmacao antes de ler qualquer corpo.
+- Em trabalho nao trivial ou multietapas, crie o checkpoint quando objetivo e escopo estiverem claros; atualize-o em marcos, antes de `/compact` e quando o cliente indicar ate cerca de 25% de contexto restante. Nao estime tokens pelo tamanho da conversa.
+- Apos compactacao, atualize-o antes de continuar com objetivo/estado, decisoes, mudancas, validacoes, proximos passos e bloqueios. Preencha `work_key`, `active_project`, `updated_at` e `checkpoint_state: 'ready'`.
+- Ao concluir ou descartar o trabalho, use `status: 'completed'` ou `abandoned`. Mantenha a memoria curta; nao grave secrets, raciocinio interno, transcricoes, grandes saidas ou copias de documentos. Consulte `.codex/memory/README.md` apenas para o formato completo.
 
-## Memoria temporaria de conversa
+## Execucao e entrega
 
-- Use o caminho de checkpoint e o `session_id` fornecidos pelo hook `SessionStart`; nao enumere `.codex/memory/sessions/` por conta propria.
-- Em uma conversa nova ou limpa, se o hook apresentar checkpoints `active`, mostre somente essa lista curta e pergunte ao usuario se deseja carregar um deles. Nao leia o corpo de nenhuma memoria sem a confirmacao ou uma solicitacao explicita pelo `session_id`, `work_key` ou caminho.
-- Para trabalho nao trivial que possa atravessar varios turnos, crie o checkpoint da sessao assim que objetivo e escopo estiverem definidos. Atualize-o em marcos relevantes, antes de `/compact` e quando o cliente indicar que resta no maximo cerca de 25% da janela de contexto. Nao tente estimar tokens apenas pelo tamanho da conversa.
-- Depois de uma compactacao, atualize imediatamente o checkpoint indicado pelo hook antes de continuar: registre apenas objetivo, estado verificado, decisoes, arquivos e mudancas, validacoes, proximos passos, bloqueios e riscos. Preencha `work_key` e `active_project`, marque `checkpoint_state: 'ready'` e renove `updated_at`.
-- Vincule a memoria a issue, branch, ticket ou slug da implementacao em `work_key` e ao caminho do projeto em `active_project`. Ao terminar, marque `status: 'completed'`; se o trabalho for descartado, use `abandoned`.
-- Mantenha o checkpoint curto e operacional. Nunca grave secrets, raciocinio interno, transcricoes, grandes saidas de ferramentas ou copias de documentacao. Consulte `.codex/memory/README.md` somente quando precisar do formato ou do procedimento completo.
-
-## Forma de trabalhar
-
-- Aplique profundidade proporcional a tarefa. Em tarefas simples, avance sem criar cerimonia desnecessaria.
-- Entenda a solicitacao e a implementacao existente antes de editar. Comece por manifestos, entrypoints, simbolos e testes diretamente relacionados; amplie a leitura apenas quando as evidencias exigirem.
-- Preserve alteracoes locais existentes e nao toque em arquivos sem relacao com a solicitacao.
-- Prefira mudancas pequenas, coerentes com a arquitetura e o estilo existentes. Nao adicione dependencias, abstracoes ou refatoracoes especulativas.
-- Depois de editar, execute primeiro a validacao mais proxima da mudanca e depois verificacoes mais amplas quando o custo e o risco justificarem. Use build, testes, lint, formatacao, analise estatica e verificacao de tipos ja adotados pelo projeto.
-- Revise o proprio diff antes de concluir. Relate o que mudou, as validacoes realmente executadas e qualquer limitacao ou risco residual; nunca declare uma verificacao que nao ocorreu.
-
-## Revisao, documentacao e seguranca
-
-- Em revisoes, priorize bugs, regressoes, seguranca, concorrencia, compatibilidade, tratamento de erros e testes ausentes. Revisar nao autoriza modificar o codigo.
-- Mantenha documentacao especifica junto do projeto ativo e baseie-a apenas em codigo, configuracao ou informacao fornecida e verificada. Nao invente decisoes arquiteturais.
-- Nao exponha secrets em arquivos, comandos, logs ou respostas.
-- Antes de operacoes de alto impacto ou intencao ambigua — exclusao em massa, migracao destrutiva, infraestrutura, secrets, CI/CD, publicacao, deploy ou force push — pare e solicite autorizacao.
-- Nunca descarte trabalho, reescreva historico ou execute operacoes Git destrutivas sem pedido explicito.
+- Aplique profundidade proporcional. Antes de editar, entenda o pedido e inspecione apenas manifestos, entrypoints, simbolos e testes relacionados; amplie quando houver lacuna concreta.
+- Preserve mudancas locais e arquivos alheios. Prefira a menor alteracao coerente, sem dependencias, abstracoes ou refatoracoes especulativas.
+- Valide primeiro o comportamento alterado e amplie conforme custo e risco usando ferramentas existentes. Revise o diff e relate somente mudancas e verificacoes reais, omissoes e riscos residuais.
+- Em review, priorize defeitos, seguranca, concorrencia, compatibilidade, erros e testes ausentes; nao edite sem pedido. Mantenha documentacao especifica e verificada no projeto correspondente.
+- Nao exponha secrets. Solicite autorizacao antes de exclusao em massa, migracao destrutiva, infraestrutura, secrets, CI/CD, publicacao, deploy ou force push. Nunca descarte trabalho nem reescreva historico sem pedido explicito.

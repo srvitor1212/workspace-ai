@@ -1,35 +1,21 @@
 ---
 name: code-review
-description: "Revise diffs, commits ou alteracoes atuais procurando bugs, regressoes, vulnerabilidades, incompatibilidades e testes ausentes. Use para code review; por padrao, reporte achados sem modificar o codigo."
+description: "Revise diffs ou commits por bugs, regressoes, seguranca, incompatibilidades e testes ausentes. Reporte achados; nao edite sem pedido."
 ---
 
 # Code review
 
-Avalie o comportamento e o risco das mudancas no projeto ativo. Comentarios esteticos sem impacto pratico nao sao achados.
+Avalie comportamento e risco; estilo sem impacto pratico nao e achado.
 
-## Abordagem
+## Processo
 
-1. Defina o conjunto de mudancas e a base de comparacao. Observe instrucoes de review e alteracoes locais preexistentes.
-2. Leia o diff e contexto suficiente para compreender contratos, chamadores, persistencia, concorrencia, seguranca e caminhos de erro afetados.
-3. Verifique especialmente:
-   - comportamento incorreto ou regressao;
-   - validacao, autorizacao e exposicao de dados;
-   - condicoes de corrida, idempotencia e consistencia;
-   - compatibilidade de API, schema, configuracao e deploy;
-   - tratamento de falhas, recursos e observabilidade;
-   - testes ausentes em comportamentos de risco.
-4. Confirme cada achado contra o codigo; nao reporte uma possibilidade abstrata sem um cenario plausivel de falha.
-5. Considere o resultado das validacoes existentes, mas nao assuma que testes verdes provam ausencia de regressao.
+1. Defina mudancas e base de comparacao; preserve trabalho local e siga regras de review.
+2. Leia diff e contexto suficiente de contratos, chamadores, dados, concorrencia, seguranca e erros.
+3. Procure regressao; falhas de validacao/autorizacao; exposicao de dados; corrida, idempotencia ou consistencia; incompatibilidade de API, schema, configuracao ou deploy; recursos, observabilidade e testes ausentes.
+4. Confirme cada achado com um cenario plausivel. Testes verdes sao evidencia, nao prova de ausencia de regressao.
 
 ## Achados
 
-Liste primeiro os achados, ordenados por gravidade:
+Ordene por gravidade: `P0` critico imediato; `P1` grave ou bloqueador provavel; `P2` impacto moderado; `P3` menor, concreto e acionavel.
 
-- `P0`: impacto critico imediato, como perda ampla de dados ou comprometimento;
-- `P1`: bug grave ou regressao provavel que bloqueia a entrega;
-- `P2`: problema real de impacto moderado;
-- `P3`: risco menor, mas concreto e acionavel.
-
-Para cada achado, informe caminho e linha, cenario, impacto e correcao sugerida. Mantenha o intervalo de linhas minimo necessario.
-
-Depois dos achados, registre perguntas ou suposicoes e uma sintese curta. Se nenhum problema for encontrado, diga isso e mencione riscos de teste ou cobertura ainda existentes. Nao edite arquivos sem pedido explicito.
+Para cada achado, informe caminho e linha minima, cenario, impacto e correcao. Depois registre duvidas ou suposicoes e uma sintese. Sem achados, diga isso e indique riscos de teste ou cobertura. Nao edite sem pedido.

@@ -1,31 +1,22 @@
 ---
 name: implementation-plan
-description: "Transforme uma solicitacao de software em um plano tecnico executavel, com escopo, componentes, riscos, testes e criterios de conclusao. Use quando o usuario pedir planejamento; nao implemente o plano por padrao."
+description: "Produza um plano tecnico executavel com escopo, riscos, testes e criterios. Use para planejar; nao implemente sem pedido."
 ---
 
 # Plano de implementacao
 
-Crie um plano baseado na implementacao real do projeto ativo, nao apenas no texto da solicitacao.
+Baseie o plano na implementacao real, nao apenas no pedido.
 
-## Abordagem
+## Processo
 
-1. Expresse o resultado esperado e os comportamentos que devem permanecer inalterados.
-2. Leia as instrucoes do projeto e inspecione somente os entrypoints, simbolos, testes e configuracoes necessarios para localizar a mudanca.
-3. Identifique componentes afetados, dependencias, compatibilidade, migracoes e riscos operacionais ou de dados.
-4. Escolha a menor estrategia coerente com os padroes existentes. Registre alternativas apenas quando houver uma decisao real a tomar.
-5. Defina validacoes direcionadas, verificacoes mais amplas quando justificadas e criterios observaveis de conclusao.
+1. Defina resultado, fora de escopo e comportamentos preservados.
+2. Leia instrucoes e inspecione somente entrypoints, simbolos, testes e configuracoes necessarios.
+3. Identifique componentes, dependencias, compatibilidade, migracoes e riscos operacionais ou de dados.
+4. Escolha a menor estrategia coerente; registre alternativas apenas diante de uma decisao real.
+5. Defina testes, validacoes proporcionais e criterios observaveis de conclusao.
 
-Se uma incerteza impedir uma decisao segura, destaque-a e indique a menor verificacao ou resposta necessaria. Nao preencha lacunas com arquitetura inventada.
+Se faltar informacao para uma decisao segura, indique a menor verificacao ou resposta necessaria; nao invente arquitetura.
 
-## Formato do plano
+## Entrega
 
-Adapte o detalhe a complexidade. Inclua:
-
-- objetivo e fora de escopo;
-- arquivos, modulos ou contratos afetados;
-- passos de implementacao em ordem de dependencia;
-- estrategia de testes e validacao;
-- riscos, compatibilidade e eventual estrategia de reversao;
-- criterios de conclusao.
-
-Para mudancas pequenas, poucos passos concretos sao suficientes. Por padrao, nao edite codigo nem crie um arquivo de plano sem solicitacao explicita.
+Adapte o detalhe a complexidade e ordene os passos por dependencia. Inclua arquivos ou contratos afetados, testes, riscos, compatibilidade e reversao quando pertinente. Nao edite codigo nem crie arquivo de plano sem pedido explicito.

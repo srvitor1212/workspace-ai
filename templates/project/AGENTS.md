@@ -1,54 +1,35 @@
 # Instruções do projeto
 
-> Template: adapte este arquivo ao projeto e remova orientações que não se aplicam. Não copie regras sem verificá-las no repositório.
+> Adapte ao repositório, mantenha apenas regras verificadas e remova seções sem conteúdo.
 
-## Contexto
+## Contexto e estrutura
 
-- Propósito do projeto: <!-- descreva em uma ou duas frases -->
-- Limites e integrações principais: <!-- informe somente o que estiver verificado -->
-- Áreas sensíveis ou fora de escopo: <!-- dados, segurança, legado, componentes externos -->
-
-## Estrutura relevante
-
-- Entrypoints: <!-- caminhos -->
-- Código principal: <!-- caminhos -->
+- Propósito e limites: <!-- objetivo, integrações e fora de escopo -->
+- Áreas sensíveis: <!-- dados, segurança, legado ou serviços externos -->
+- Entrypoints e código principal: <!-- caminhos -->
 - Testes: <!-- caminhos -->
-- Índice de documentação: `README-CODEX.md` <!-- ou outro índice leve já adotado -->
+- Índice documental: `README-CODEX.md` <!-- ou índice já adotado -->
 
-## Descoberta de documentação
+## Documentação
 
-- Consulte o índice somente quando a tarefa depender de contexto documental.
-- Use o índice para escolher documentos por tema; não leia `docs/` inteiro como preparação padrão.
-- Se o índice não cobrir a pergunta, busque nomes, títulos ou termos e abra somente os documentos candidatos.
-- Ao criar, mover ou remover documentação, atualize o índice sem copiar para ele o conteúdo dos documentos.
+- Quando a tarefa exigir documentos, use o índice para abrir somente os temas relacionados; sem cobertura, busque nomes, títulos ou termos antes de ler arquivos.
+- Não varra `docs/` por padrão. Ao criar, mover ou remover documento, atualize o índice sem duplicar conteúdo.
 
 ## Comandos verificados
 
-- Preparação do ambiente: <!-- comando ou "não documentado" -->
+- Ambiente e execução: <!-- comandos, pré-requisitos e diretório -->
 - Build: <!-- comando ou "não aplicável" -->
-- Testes direcionados: <!-- comando e forma de filtrar -->
-- Testes completos: <!-- comando -->
-- Lint, formatação, tipos ou análise estática: <!-- comandos existentes -->
+- Teste direcionado e completo: <!-- comandos e filtros -->
+- Qualidade: <!-- lint, formato, tipos ou análise estática -->
 
-Não invente comandos ausentes. Registre pré-requisitos e diretório de execução quando isso alterar o resultado.
+Não invente comandos ausentes.
 
-## Convenções e limites
+## Convenções e riscos
 
-- <!-- padrões arquiteturais que realmente orientam mudanças -->
-- <!-- compatibilidade, contratos ou invariantes importantes -->
-- <!-- arquivos gerados e como atualizá-los corretamente -->
+- <!-- arquitetura, contratos, compatibilidade e arquivos gerados -->
+- <!-- dados, secrets, migrations, infraestrutura, deploy e focos de review -->
 
-## Validação e entrega
+## Validação e segurança
 
-- Execute primeiro as verificações diretamente relacionadas à mudança.
-- <!-- verificações obrigatórias específicas deste projeto -->
-- Documente validações não executadas e o risco restante.
-
-## Segurança e operações de alto impacto
-
-- <!-- regras verificadas para dados, secrets, migrations, infraestrutura ou deploy -->
-- Solicite autorização antes de uma operação destrutiva ou externa quando a intenção não estiver explícita.
-
-## Code Review Rules
-
-- <!-- riscos concretos que uma revisão deve priorizar neste projeto -->
+- Execute primeiro a verificação relacionada; registre o que não foi executado e o risco restante.
+- Solicite autorização antes de operação destrutiva ou externa sem intenção explícita.

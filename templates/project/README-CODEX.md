@@ -1,65 +1,40 @@
-# Índice de contexto do projeto para Codex
+# Índice de contexto do projeto
 
-Este é o mapa leve de contexto e documentação deste projeto. Mantenha aqui somente informações específicas e verificadas, com links para as fontes detalhadas em vez de copiar seu conteúdo.
-
-## Como usar este índice
-
-- Consulte este arquivo quando a tarefa precisar de orientação sobre arquitetura, operação ou documentação.
-- Abra somente os documentos indicados para o tema da tarefa.
-- Não percorra toda a documentação como preparação padrão.
-- Se uma informação do índice afetar uma mudança, confirme-a no código, configuração ou testes.
+Mapa curto de informação verificada. Use-o para escolher fontes por tema; não copie documentos nem varra toda a árvore. Confirme decisões em código, configuração ou testes e atualize-o quando comandos, estrutura, restrições ou rotas mudarem.
 
 ## Visão geral
 
-<!-- Explique o propósito, os usuários do sistema e os limites do projeto. -->
+<!-- Propósito, usuários e limites. -->
 
-## Como começar
+## Operação
 
-### Pré-requisitos
-
-<!-- Ferramentas, versões, serviços e acesso necessários. -->
-
-### Preparação
-
-```text
-<comandos verificados para preparar o ambiente>
-```
-
-### Execução local
-
-```text
-<comando verificado e diretório de execução>
-```
+- Pré-requisitos: <!-- ferramentas, versões, serviços e acesso -->
+- Preparação: `<comando verificado>`
+- Execução local: `<comando e diretório>`
 
 ## Validação
 
-| Objetivo | Comando verificado | Observações |
+| Objetivo | Comando | Observações |
 | --- | --- | --- |
-| Build | `<comando>` | `<pré-requisitos ou não aplicável>` |
-| Teste direcionado | `<comando>` | `<como selecionar módulo ou caso>` |
-| Teste completo | `<comando>` | `<custo ou dependências>` |
-| Qualidade | `<comando>` | `<lint, tipos, formatação ou análise estática>` |
+| Build | `<comando>` | `<pré-requisito ou não aplicável>` |
+| Teste direcionado | `<comando>` | `<filtro>` |
+| Teste completo | `<comando>` | `<custo ou dependência>` |
+| Qualidade | `<comando>` | `<lint, tipos ou formato>` |
 
 ## Mapa técnico
 
 - Entrypoints: <!-- caminhos -->
-- Módulos principais: <!-- caminhos e responsabilidade -->
-- Persistência e integrações: <!-- componentes verificados -->
+- Módulos: <!-- caminhos e responsabilidades -->
+- Persistência e integrações: <!-- componentes -->
 
-## Índice de documentação
-
-Mantenha uma linha por tema. O campo "Quando consultar" deve permitir decidir se o documento é relevante antes de abri-lo.
+## Documentação
 
 | Tema | Caminho | Quando consultar | Fonte de verdade |
 | --- | --- | --- | --- |
-| `<tema>` | [`<documento>`](<caminho-relativo>) | `<tipo de tarefa ou dúvida>` | `<código, contrato, configuração ou documento>` |
+| `<tema>` | [`<documento>`](<caminho-relativo>) | `<tarefa ou dúvida>` | `<código, contrato, configuração ou documento>` |
 
-Não liste arquivos temporários, gerados ou sem utilidade para decisões. Se o projeto já adota outro índice, aponte para ele aqui em vez de manter dois catálogos.
+Não liste arquivos temporários ou sem valor decisório. Se já houver outro índice, aponte para ele em vez de manter dois.
 
-## Restrições conhecidas
+## Restrições
 
-<!-- Compatibilidade, áreas legadas, dados sensíveis e operações que exigem cuidado. -->
-
-## Manutenção deste documento
-
-Atualize este índice quando comandos, estrutura, restrições ou caminhos documentais mudarem. Se uma informação não puder ser confirmada no código ou no ambiente, marque-a como pendente em vez de apresentá-la como fato.
+<!-- Compatibilidade, legado, dados sensíveis e operações críticas. Marque como pendente o que não puder ser confirmado. -->

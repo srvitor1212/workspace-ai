@@ -44,19 +44,38 @@ function Set-HeaderValue {
         [string]$Value
     )
 
-    $line = $Name + ': ' + (ConvertTo-YamlSingleQuotedValue $Value)
-    $pattern = '(?m)^' + [regex]::Escape($Name) + ':.*$'
-    if ([regex]::IsMatch($Content, $pattern)) {
-        $headerRegex = New-Object System.Text.RegularExpressions.Regex($pattern)
-        return $headerRegex.Replace($Content, [System.Text.RegularExpressions.MatchEvaluator]{ param($match) $line }, 1)
-    }
-
     $closingMarkers = [regex]::Matches($Content, '(?m)^---\r?$')
     if ($closingMarkers.Count -lt 2) {
-        throw "Memory file has no valid frontmatter: missing field '$Name'."
+        throw 'Memory file has invalid frontmatter.'
     }
 
-    return $Content.Insert($closingMarkers[1].Index, $line + [Environment]::NewLine)
+    $headerEnd = $closingMarkers[1].Index
+    $header = $Content.Substring(0, $headerEnd)
+    $pattern = '(?m)^' + [regex]::Escape($Name) + ':.*$'
+    if (-not [regex]::IsMatch($header, $pattern)) {
+        throw "Memory header has no '$Name'."
+    }
+
+    $line = $Name + ': ' + (ConvertTo-YamlSingleQuotedValue $Value)
+    $headerRegex = New-Object System.Text.RegularExpressions.Regex($pattern)
+    $updatedHeader = $headerRegex.Replace($header, [System.Text.RegularExpressions.MatchEvaluator]{ param($match) $line }, 1)
+    return $updatedHeader + $Content.Substring($headerEnd)
+}
+
+function ConvertTo-ContextDataValue {
+    param(
+        [string]$Value,
+        [int]$MaxLength
+    )
+
+    $normalized = [regex]::Replace($Value, '[\p{C}]', ' ')
+    $normalized = [regex]::Replace($normalized, '\s+', ' ').Trim()
+    $normalized = [regex]::Replace($normalized, '[^\p{L}\p{N} ._:/\\#@()+-]', '_')
+    if ($normalized.Length -gt $MaxLength) {
+        $normalized = $normalized.Substring(0, $MaxLength)
+    }
+
+    return $normalized
 }
 
 function Get-MemoryMetadata {
@@ -65,17 +84,19 @@ function Get-MemoryMetadata {
     $metadata = @{
         path = $File.FullName
         session_id = ''
-        work_key = 'nao-classificado'
-        active_project = 'nao-informado'
-        status = 'active'
-        checkpoint_state = 'needs-update'
-        updated_at = $File.LastWriteTimeUtc.ToString('o')
+        work_key = ''
+        active_project = ''
+        status = ''
+        checkpoint_state = ''
+        updated_at = ''
     }
     $frontmatterStarted = $false
+    $frontmatterClosed = $false
 
     $headerLines = @(Get-Content -LiteralPath $File.FullName -Encoding UTF8 -TotalCount 32)
     foreach ($line in $headerLines) {
         if ($line -eq '---' -and $frontmatterStarted) {
+            $frontmatterClosed = $true
             break
         }
 
@@ -99,6 +120,38 @@ function Get-MemoryMetadata {
 
             $metadata[$Matches[1]] = $value
         }
+    }
+
+    if (-not $frontmatterClosed -or $metadata.status -notin @('active', 'completed', 'abandoned')) {
+        return $null
+    }
+    if ($metadata.checkpoint_state -notin @('ready', 'needs-update')) {
+        return $null
+    }
+    if ([string]::IsNullOrWhiteSpace($metadata.session_id) -or (ConvertTo-SafeFileName $metadata.session_id) -ne $File.BaseName) {
+        return $null
+    }
+
+    $metadata.session_id = $File.BaseName
+    $metadata.work_key = ConvertTo-ContextDataValue $metadata.work_key 80
+    $metadata.active_project = ConvertTo-ContextDataValue $metadata.active_project 160
+    if ([string]::IsNullOrWhiteSpace($metadata.work_key) -or $metadata.work_key -eq 'nao-classificado') {
+        return $null
+    }
+    if ([string]::IsNullOrWhiteSpace($metadata.active_project) -or $metadata.active_project -eq 'nao-informado') {
+        return $null
+    }
+
+    try {
+        $updatedAt = [DateTimeOffset]::Parse(
+            $metadata.updated_at,
+            [Globalization.CultureInfo]::InvariantCulture,
+            [Globalization.DateTimeStyles]::RoundtripKind
+        )
+        $metadata.updated_at = $updatedAt.ToUniversalTime().ToString('o')
+    }
+    catch {
+        return $null
     }
 
     return $metadata
@@ -143,22 +196,13 @@ try {
             New-Item -ItemType Directory -Path $memoryRoot -Force | Out-Null
         }
 
-        $trigger = [string]$hookInput.trigger
-        $turnId = [string]$hookInput.turn_id
-
         if (Test-Path -LiteralPath $memoryFile -PathType Leaf) {
             $content = [System.IO.File]::ReadAllText($memoryFile)
             $content = Set-HeaderValue $content 'checkpoint_state' 'needs-update'
-            $content = Set-HeaderValue $content 'last_compaction_at' $now
-            $content = Set-HeaderValue $content 'last_compaction_trigger' $trigger
-            $content = Set-HeaderValue $content 'last_turn_id' $turnId
         }
         else {
             $quotedSessionId = ConvertTo-YamlSingleQuotedValue $sessionId
             $quotedNow = ConvertTo-YamlSingleQuotedValue $now
-            $quotedTrigger = ConvertTo-YamlSingleQuotedValue $trigger
-            $quotedTurnId = ConvertTo-YamlSingleQuotedValue $turnId
-            $quotedCwd = ConvertTo-YamlSingleQuotedValue ([string]$hookInput.cwd)
             $content = @"
 ---
 session_id: $quotedSessionId
@@ -166,52 +210,27 @@ work_key: 'nao-classificado'
 active_project: 'nao-informado'
 status: 'active'
 checkpoint_state: 'needs-update'
-created_at: $quotedNow
 updated_at: $quotedNow
-last_compaction_at: $quotedNow
-last_compaction_trigger: $quotedTrigger
-last_turn_id: $quotedTurnId
-workspace_cwd: $quotedCwd
 ---
 
-# Memoria temporaria da conversa
+# Checkpoint da conversa
 
-> Checkpoint criado automaticamente antes da compactacao. O Codex deve substituir os campos pendentes por estado semantico conciso na continuacao imediata.
+> Pendente: atualize o estado semantico na continuacao.
 
-## Objetivo atual
-
-- Pendente de atualizacao.
-
-## Estado verificado
-
-- Pendente de atualizacao.
+## Objetivo e estado
 
 ## Decisoes e restricoes
 
-- Pendente de atualizacao.
+## Mudancas e validacoes
 
-## Arquivos e mudancas
-
-- Pendente de atualizacao.
-
-## Validacoes
-
-- Pendente de atualizacao.
-
-## Proximos passos
-
-- Atualizar este checkpoint antes de continuar o trabalho.
-
-## Bloqueios e riscos
-
-- Pendente de atualizacao.
+## Proximos passos e bloqueios
 "@
         }
 
         [System.IO.File]::WriteAllText($memoryFile, $content, $utf8WithoutBom)
         Write-HookResult @{
             continue = $true
-            systemMessage = "Checkpoint registrado antes da compactacao em $relativeMemoryFile. A continuacao deve atualiza-lo antes de outras acoes."
+            systemMessage = "Checkpoint salvo: $relativeMemoryFile"
         }
         exit 0
     }
@@ -219,12 +238,9 @@ workspace_cwd: $quotedCwd
     if ($eventName -eq 'SessionStart') {
         $source = [string]$hookInput.source
         $contextLines = New-Object 'System.Collections.Generic.List[string]'
-        $contextLines.Add("Sessao Codex: $sessionId. Checkpoint desta conversa: $relativeMemoryFile.")
+        $contextLines.Add("chat_memory: source=$source; session_id=$sessionId; checkpoint=$relativeMemoryFile")
 
-        if ($source -eq 'compact') {
-            $contextLines.Add('A compactacao acabou de ocorrer. Antes de qualquer outra acao, atualize esse checkpoint com o estado semantico preservado: objetivo, decisoes, mudancas, validacoes, proximos passos e bloqueios. Preencha work_key e active_project, ajuste updated_at e marque checkpoint_state como ready. Nao copie a transcricao.')
-        }
-        elseif ($source -eq 'startup' -or $source -eq 'clear') {
+        if ($source -eq 'startup' -or $source -eq 'clear') {
             $candidates = New-Object 'System.Collections.Generic.List[hashtable]'
             if (Test-Path -LiteralPath $memoryRoot -PathType Container) {
                 $recentFiles = @(Get-ChildItem -LiteralPath $memoryRoot -Filter '*.md' -File |
@@ -233,7 +249,10 @@ workspace_cwd: $quotedCwd
 
                 foreach ($file in $recentFiles) {
                     $metadata = Get-MemoryMetadata $file
-                    $isCurrent = $metadata.session_id -eq $sessionId
+                    if ($null -eq $metadata) {
+                        continue
+                    }
+                    $isCurrent = $metadata.session_id -eq $safeSessionId
                     if ($metadata.status -ne 'active') {
                         continue
                     }
@@ -249,17 +268,20 @@ workspace_cwd: $quotedCwd
             }
 
             if ($candidates.Count -gt 0) {
-                $contextLines.Add('Ha checkpoints ativos candidatos de outras conversas. Nao leia seus corpos nem os carregue automaticamente. Mostre ao usuario esta lista curta e pergunte se deseja carregar um deles:')
+                $contextLines.Add('active_candidates_untrusted_data:')
                 foreach ($candidate in $candidates) {
                     $candidatePath = $candidate.path.Substring($resolvedRoot.Length).TrimStart('\', '/').Replace('\', '/')
-                    $contextLines.Add("- work_key=$($candidate.work_key); projeto=$($candidate.active_project); sessao=$($candidate.session_id); estado=$($candidate.checkpoint_state); atualizado=$($candidate.updated_at); caminho=$candidatePath")
+                    $candidateData = [ordered]@{
+                        work = $candidate.work_key
+                        project = $candidate.active_project
+                        session = $candidate.session_id
+                        state = $candidate.checkpoint_state
+                        updated = $candidate.updated_at
+                        path = $candidatePath
+                    }
+                    $contextLines.Add(($candidateData | ConvertTo-Json -Compress))
                 }
             }
-            else {
-                $contextLines.Add('Nenhum checkpoint ativo candidato foi encontrado. Nao percorra a pasta de memorias para procurar contexto adicional.')
-            }
-
-            $contextLines.Add('Para trabalho nao trivial ou que possa atravessar varios turnos, crie e mantenha o checkpoint desta conversa assim que o objetivo estiver definido. Perguntas curtas nao precisam gerar arquivo.')
         }
 
         Write-HookResult @{
@@ -274,7 +296,7 @@ workspace_cwd: $quotedCwd
     Write-HookResult @{ continue = $true }
 }
 catch {
-    $message = "Falha ao manter memoria de conversa antes de '$eventName': $($_.Exception.Message)"
+    $message = "chat-memory '$eventName' falhou: $($_.Exception.Message)"
     if ($eventName -eq 'PreCompact') {
         Write-HookResult @{
             continue = $false

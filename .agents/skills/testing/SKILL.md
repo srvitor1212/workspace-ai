@@ -1,26 +1,22 @@
 ---
 name: testing
-description: "Analise, crie, ajuste ou execute testes de software usando a infraestrutura existente do projeto. Use para proteger comportamentos e validar mudancas; nao introduza um novo framework de testes sem necessidade e autorizacao."
+description: "Analise, crie, ajuste ou execute testes com a infraestrutura existente. Nao adote outro framework sem necessidade e autorizacao."
 ---
 
 # Testes
 
 Proteja comportamento observavel com testes estaveis e proporcionais ao risco.
 
-## Abordagem
+## Processo
 
-1. Identifique o comportamento, contrato ou regressao que precisa ser provado e as instrucoes aplicaveis.
-2. Localize testes semelhantes, framework, fixtures, convencoes e comandos ja usados pelo projeto.
-3. Escolha o nivel mais baixo que ofereca confianca adequada: unidade, integracao, contrato, componente ou ponta a ponta.
-4. Cubra o caminho principal e os limites relevantes, como entradas invalidas, erros, autorizacao, concorrencia ou compatibilidade. Nao multiplique casos sem ganho de confianca.
-5. Prefira resultados observaveis a detalhes internos. Evite testes que apenas reimplementam o algoritmo, dependem de tempo real, ordem acidental ou dados globais mutaveis.
-6. Execute primeiro o menor conjunto afetado e depois suites mais amplas quando o custo e o risco justificarem.
+1. Defina o comportamento, contrato ou regressao a provar e leia as instrucoes aplicaveis.
+2. Localize testes semelhantes, framework, fixtures, convencoes e comandos existentes.
+3. Use o nivel mais baixo com confianca adequada e cubra caminho principal e limites de entrada, erro, autorizacao, concorrencia e compatibilidade sem multiplicar casos.
+4. Teste resultados, nao implementacao. Evite reimplementar o algoritmo ou depender de tempo real, ordem acidental e estado global mutavel.
+5. Execute primeiro o conjunto afetado e amplie conforme custo e risco.
 
-Ao corrigir uma regressao, confirme quando pratico que o teste falha pela causa esperada antes da correcao e passa depois dela.
+Em regressao, confirme quando pratico que o teste falha pela causa esperada antes da correcao e passa depois. Nao altere snapshots ou expectativas para silenciar falhas nem introduza ferramentas ou reestruture a suite sem necessidade.
 
-## Limites e relato
+## Entrega
 
-- Nao atualize snapshots ou expectativas apenas para silenciar uma falha sem confirmar o novo comportamento.
-- Nao instale ferramentas ou reestruture toda a suite para uma mudanca pequena.
-- Diferencie falhas introduzidas, falhas preexistentes e limitacoes do ambiente.
-- Informe testes criados ou alterados, comandos executados, resultados e cobertura de risco ainda ausente.
+Diferencie falhas introduzidas, preexistentes e ambientais. Relate testes alterados, comandos, resultados e riscos ainda sem cobertura.
