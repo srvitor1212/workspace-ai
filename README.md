@@ -1,293 +1,112 @@
-# Workspace central para OpenAI Codex
+# Workspace para OpenAI Codex
 
-Este repositório é uma camada genérica de governança, contexto e workflows para usar o Codex em desenvolvimento de software. Ele organiza a forma de analisar, planejar, implementar, depurar, testar, revisar e documentar projetos sem incorporar regras de nenhuma aplicação específica.
+Camada genérica de governança e ferramentas para trabalhar com repositórios independentes em `projects/`. Regras e documentação de cada aplicação permanecem no próprio projeto.
 
-Os repositórios reais ficam em `projects/`, permanecem independentes e são ignorados pelo Git deste workspace.
+## Uso rápido
 
-## Arquitetura
-
-```text
-workspace-ai/
-├── AGENTS.md
-├── README.md
-├── .gitignore
-├── .codex/
-│   ├── hooks.json
-│   ├── hooks/chat-memory.ps1
-│   └── memory/                 # checkpoints versionáveis por conversa
-├── .agents/
-│   └── skills/
-│       ├── repository-analysis/
-│       │   └── SKILL.md
-│       ├── implementation-plan/
-│       │   └── SKILL.md
-│       ├── implement-change/
-│       │   └── SKILL.md
-│       ├── debugging/
-│       │   └── SKILL.md
-│       ├── code-review/
-│       │   └── SKILL.md
-│       ├── testing/
-│       │   └── SKILL.md
-│       └── documentation/
-│           └── SKILL.md
-├── templates/
-│   └── project/
-│       ├── AGENTS.md
-│       └── README-CODEX.md
-├── scripts/
-│   └── Test-Workspace.ps1
-└── projects/                 # conteúdo ignorado por este Git
-```
-
-As responsabilidades são separadas deliberadamente:
-
-- `AGENTS.md` define como o Codex deve se comportar neste workspace.
-- `.agents/skills/` descreve como executar categorias específicas de tarefa.
-- `.codex/hooks.json` usa eventos nativos do Codex para proteger e descobrir checkpoints de conversa.
-- `.codex/memory/` guarda memória temporária curta e versionável, vinculada à sessão e ao trabalho.
-- `templates/project/` ajuda cada projeto a manter suas instruções e um índice leve de contexto e documentação.
-- `scripts/` contém somente automação determinística útil ao workspace.
-- `projects/` contém repositórios independentes e nunca é fonte de regras globais.
-
-## Início rápido
-
-1. Na raiz do workspace, crie `projects/` se a pasta ainda não existir:
+1. Crie a pasta e adicione um projeto:
 
    ```powershell
    New-Item -ItemType Directory -Force .\projects | Out-Null
+   git clone <url> .\projects\MeuProjeto
    ```
 
-2. Clone ou mova um repositório para um caminho próprio:
-
-   ```powershell
-   git clone <url-do-repositorio> .\projects\MeuProjeto
-   ```
-
-3. Inicie o Codex na raiz deste workspace:
+2. Inicie o Codex na raiz:
 
    ```powershell
    codex
    ```
 
-   De outro diretório, use `codex --cd C:\caminho\para\workspace-ai`. Se a política de execução do Windows bloquear o wrapper `codex.ps1` de uma instalação npm, invoque `codex.cmd` sem alterar a política do sistema.
+   De outro diretório, use `codex --cd C:\caminho\workspace-ai`. Se o Windows bloquear `codex.ps1`, use `codex.cmd`.
 
-4. Informe sempre o projeto no prompt:
+3. Nomeie o projeto no pedido: `Analise a arquitetura de projects/MeuProjeto.`
+4. Na primeira sessão após clonar ou alterar `.codex/hooks.json`, execute `/hooks`, revise e autorize a definição.
 
-   ```text
-   Analise a arquitetura do projeto projects/MeuProjeto.
-   ```
+O Git desta raiz ignora todo `projects/`; cada filho pode manter repositório, branch e histórico próprios.
 
-O modo recomendado é manter a sessão na raiz e selecionar o projeto pelo caminho no prompt. Isso carrega a governança e as skills do workspace e evita que um projeto vizinho entre no contexto por acidente.
+## Componentes
 
-Na primeira sessão depois de clonar ou alterar os hooks, execute `/hooks`, revise a definição local e autorize-a. Hooks de projeto não executam antes dessa confirmação e uma mudança no arquivo exige nova revisão.
+| Caminho | Função |
+| --- | --- |
+| `AGENTS.md` | Regras sempre aplicáveis ao workspace |
+| `.agents/skills/` | Workflows carregados somente quando selecionados |
+| `.codex/hooks.json` | Eventos de memória antes e depois da compactação |
+| `.codex/memory/` | Checkpoints curtos e versionáveis por conversa |
+| `templates/project/` | Modelos de instruções e índice documental de projeto |
+| `scripts/Test-Workspace.ps1` | Validação determinística da estrutura |
+| `projects/` | Repositórios independentes, fora do Git desta raiz |
 
-## Como adicionar ou preparar um projeto
+## Projetos e contexto
 
-Cada filho imediato de `projects/` pode ser um repositório Git completo, com branch, histórico, configuração, documentação e instruções próprias. O Git externo não rastreia nem interfere nesses arquivos porque `/projects/` está ignorado.
+O caminho explícito no prompt seleciona o projeto; não há cadastro central. Se o alvo for ambíguo, o Codex deve perguntar em vez de percorrer projetos. Para preparar um repositório, preserve instruções existentes e adapte, quando útil, [`templates/project/AGENTS.md`](templates/project/AGENTS.md) e [`templates/project/README-CODEX.md`](templates/project/README-CODEX.md).
 
-Para preparar um projeto novo:
+| Onde a sessão começa | Contexto automático | Consequência |
+| --- | --- | --- |
+| Raiz deste workspace | `AGENTS.md` e skills desta raiz | Modo recomendado; instruções do projeto ativo são localizadas explicitamente |
+| Dentro de `projects/MeuProjeto` | Instruções e skills do Git interno | A governança externa pode ficar fora da busca ascendente |
 
-1. Adicione o repositório em `projects/<nome>`.
-2. Verifique se ele já possui `AGENTS.md`, `AGENTS.override.md` ou documentação equivalente.
-3. Se precisar de instruções próprias, adapte `templates/project/AGENTS.md` dentro do projeto. Não sobrescreva um arquivo existente; mescle apenas o que for compatível.
-4. Use `templates/project/README-CODEX.md` como índice leve para comandos, entrypoints, restrições e rotas de documentação verificadas.
-5. Mantenha todas as informações da aplicação dentro do repositório da aplicação.
+Por diretório, `AGENTS.override.md` substitui `AGENTS.md`; instruções mais próximas especializam as anteriores. A cadeia é montada no início da sessão, portanto alterações pedem nova sessão. Veja [AGENTS.md](https://developers.openai.com/codex/guides/agents-md).
 
-Não é necessário cadastrar projetos em um índice central. O caminho explícito no prompt é o seletor de escopo e reduz o risco de contexto cruzado.
+### Carregamento progressivo
 
-## Isolamento entre projetos
+- O catálogo nativo (`name`, `description`, caminho) é o único índice de skills; somente as selecionadas são abertas.
+- Documentação é consultada apenas quando a tarefa exige. No projeto ativo, o Codex usa um índice leve, como `README-CODEX.md`, para escolher poucos documentos.
+- Sem índice, a descoberta começa por nomes, títulos ou termos; leitura recursiva fica reservada a auditorias explícitas.
+- Código, configuração e testes confirmam afirmações que afetam decisões.
 
-Por padrão, o Codex deve trabalhar em um único projeto ativo. O `AGENTS.md` da raiz determina que ele:
+## Skills
 
-- não liste ou percorra `projects/` para adivinhar o alvo;
-- não leia projetos irmãos;
-- não compare padrões entre aplicações;
-- não copie implementações entre projetos;
-- separe evidências e comandos quando vários projetos forem explicitamente autorizados.
+| Skill | Uso | Edita por padrão? |
+| --- | --- | --- |
+| `repository-analysis` | Mapear estrutura e fluxos | Não |
+| `implementation-plan` | Produzir plano técnico | Não |
+| `implement-change` | Implementar mudança definida | Sim |
+| `debugging` | Investigar causa raiz | Somente se solicitado |
+| `code-review` | Encontrar defeitos em mudanças | Não |
+| `testing` | Criar ou executar testes | Conforme o pedido |
+| `documentation` | Atualizar documentação verificada | Conforme o pedido |
 
-Se o prompt não identificar o projeto com segurança, o Codex deve pedir o caminho em vez de explorar todos os diretórios.
-
-## Carregamento progressivo de contexto
-
-O workspace evita pré-carregar conteúdo que talvez não participe da tarefa.
-
-### Skills
-
-O catálogo nativo do Codex — `name`, `description` e caminho — já funciona como índice. O `AGENTS.md` proíbe percorrer `.agents/skills/` ou abrir todos os `SKILL.md` para escolher uma skill. Primeiro ocorre o roteamento pela descrição; depois somente as skills selecionadas são carregadas por completo. Recursos internos como `references/` e `scripts/` também são lidos apenas quando o `SKILL.md` escolhido os indicar.
-
-Não existe um `skills-index.md` adicional porque ele duplicaria o frontmatter e poderia ficar desatualizado.
-
-### Documentação dos projetos
-
-Cada projeto pode usar `README-CODEX.md` como índice fino. Ele deve conter contexto operacional curto e uma tabela com tema, caminho, quando consultar e fonte de verdade. O conteúdo detalhado continua em `README.md`, `docs/` ou nos documentos já adotados pelo projeto.
-
-Quando uma tarefa depender de documentação, o Codex deve:
-
-1. operar somente no projeto ativo;
-2. consultar um único índice declarado pelo projeto, preferindo `README-CODEX.md`, `docs/README.md` ou `docs/index.md`;
-3. abrir somente os documentos relacionados ao tema;
-4. se não houver índice, listar nomes ou buscar títulos e termos antes de abrir arquivos completos;
-5. ampliar a leitura apenas para resolver uma lacuna concreta.
-
-Uma leitura completa da árvore documental só é apropriada quando o usuário pedir explicitamente inventário, reorganização ou auditoria de toda a documentação. O índice orienta a descoberta, mas afirmações importantes continuam sendo verificadas no código, configuração ou testes.
-
-## Resolução de instruções
-
-O Codex monta a cadeia de instruções uma vez no início de cada execução ou sessão:
-
-1. No escopo global (`CODEX_HOME`, normalmente `~/.codex`), usa `AGENTS.override.md` quando existe; caso contrário, usa `AGENTS.md`. Apenas o primeiro arquivo não vazio desse nível entra na cadeia.
-2. No escopo do projeto, parte do project root — normalmente o Git root — e segue até o diretório de trabalho atual.
-3. Em cada diretório, procura nesta ordem: `AGENTS.override.md`, `AGENTS.md` e nomes configurados em `project_doc_fallback_filenames`. No máximo um arquivo por diretório é carregado.
-4. Os arquivos são concatenados da raiz para o diretório atual. Instruções mais próximas aparecem depois e especializam ou substituem orientações anteriores em caso de conflito.
-5. Arquivos vazios são ignorados. O limite combinado padrão é 32 KiB, configurável por `project_doc_max_bytes`.
-
-No mesmo diretório, `AGENTS.override.md` substitui `AGENTS.md`; os dois não são combinados. Mudanças nas instruções exigem uma nova sessão para reconstruir a cadeia.
-
-### Repositórios Git aninhados em `projects/`
-
-Este layout cria uma fronteira que precisa ser entendida:
-
-- Ao iniciar na raiz do workspace, o Codex descobre automaticamente o `AGENTS.md` e as skills deste repositório. Arquivos de instrução abaixo do diretório atual não entram automaticamente na cadeia inicial. Por isso, a governança da raiz manda localizar e ler, apenas no projeto ativo, os `AGENTS.md` ou `AGENTS.override.md` aplicáveis antes de analisar código.
-- Ao iniciar diretamente dentro de `projects/MeuProjeto`, o repositório Git interno tende a se tornar o project root. Nesse modo, o `AGENTS.md` e `.agents/skills/` do workspace externo ficam fora da busca ascendente e não devem ser considerados carregados.
-
-Consequentemente, use a raiz do workspace para o modo governado e multi-repositório. Inicie dentro do repositório interno somente quando quiser deliberadamente uma sessão isolada do projeto. Se a governança genérica também precisar valer nesse segundo modo, mova uma versão adequada das regras para o escopo global do usuário; não duplique silenciosamente arquivos entre repositórios.
-
-Para diagnosticar carregamento, inicie uma nova execução e peça:
-
-```text
-Liste as fontes de instrução carregadas e resuma o escopo de cada uma.
-```
-
-A documentação oficial também sugere verificar o workspace root reportado pelo cliente quando as instruções esperadas não aparecem.
-
-## Agent Skills
-
-O Codex descobre skills locais em `.agents/skills` do diretório atual até o repository root. Inicialmente, somente `name`, `description` e caminho participam da descoberta; o conteúdo completo de `SKILL.md` é carregado quando a skill é selecionada. Esse catálogo nativo é o único índice de skills mantido pelo workspace.
-
-Uma skill pode ser ativada implicitamente pela descrição ou explicitamente com `$nome`:
+Ative uma skill implicitamente pelo pedido ou explicitamente:
 
 ```text
 $repository-analysis mapeie o fluxo de autenticação em projects/AuthServiceApi.
 ```
 
-| Skill | Responsabilidade | Modifica por padrão? |
-| --- | --- | --- |
-| `repository-analysis` | Mapear estrutura, entrypoints, dependências e fluxos | Não |
-| `implementation-plan` | Transformar um pedido em plano técnico verificável | Não |
-| `implement-change` | Implementar e validar uma mudança já entendida | Sim |
-| `debugging` | Reproduzir, reunir evidências e localizar causa raiz | Não; somente se a correção for pedida |
-| `code-review` | Encontrar defeitos e riscos em mudanças | Não |
-| `testing` | Analisar, criar, ajustar ou executar testes | Conforme o pedido |
-| `documentation` | Atualizar documentação verificada no projeto | Conforme o pedido |
+Para uma capacidade reutilizável nova, use `$skill-creator`; mantenha `SKILL.md` curto e mova detalhes condicionais ou automação para recursos internos somente quando necessário.
 
-As skills atuais são autocontidas. Diretórios opcionais como `references/`, `scripts/`, `assets/` e `agents/openai.yaml` devem ser adicionados somente quando houver conteúdo condicional, automação determinística, artefatos de saída ou metadados de interface que tragam valor real.
+## Memória entre chats
 
-### Criar uma nova skill
+`SessionStart` fornece `session_id`, caminho do checkpoint e metadados de até cinco memórias candidatas; o Codex pede consentimento antes de carregar uma. `PreCompact` garante um arquivo antes da compactação e a continuação o atualiza semanticamente. Formato, limites e ativação: [`.codex/memory/README.md`](.codex/memory/README.md).
 
-1. Confirme que a capacidade é reutilizável e não pertence a um único projeto.
-2. Use `$skill-creator` ou crie `.agents/skills/<nome>/SKILL.md`.
-3. Use nome em minúsculas com hífens e frontmatter com `name` e `description` discriminante.
-4. Mantenha o workflow principal curto. Mova detalhes condicionais para `references/` e lógica repetitiva para `scripts/`.
-5. Valide a estrutura e teste prompts que devem e não devem acionar a skill.
+O recurso nativo `/memories` é independente e grava estado global em `~/.codex/memories/`.
 
-Estrutura mínima:
+## Validação
 
-```markdown
----
-name: nome-da-skill
-description: Explique o que faz, quando usar e um limite que evite acionamento incorreto.
----
-
-# Instruções
-
-Descreva o resultado, as decisões importantes e as restrições reais.
-```
-
-## Exemplos de uso
-
-```text
-Analise a arquitetura do projeto projects/AuthServiceApi.
-```
-
-```text
-Investigue o erro de autenticação no projeto projects/AuthServiceApi. Não altere código até apresentar a causa provável e as evidências.
-```
-
-```text
-Revise as alterações atuais do projeto projects/AuthServiceApi.
-```
-
-```text
-Crie um plano para implementar refresh tokens no projeto projects/AuthServiceApi.
-```
-
-```text
-Implemente a validação descrita no issue no projeto projects/AuthServiceApi e execute os testes relacionados.
-```
-
-Para tarefas maiores, informe resultado esperado, contexto relevante, limites e critérios de conclusão. Para tarefas pequenas, um objetivo e o caminho do projeto normalmente bastam.
-
-## Validação do workspace
-
-O script não instala dependências nem acessa os projetos. Ele verifica arquivos obrigatórios, nomes e frontmatter das skills, duplicidades e a regra de ignore de `projects/`.
-
-Windows PowerShell 5.1:
+O validador não instala dependências nem acessa `projects/`. Ele verifica arquivos obrigatórios, frontmatter e nomes das skills, hooks e regras de ignore.
 
 ```powershell
+# Windows PowerShell 5.1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Test-Workspace.ps1
-```
 
-PowerShell 7+:
-
-```powershell
+# PowerShell 7+
 pwsh -NoProfile -File .\scripts\Test-Workspace.ps1
 ```
 
-O uso de `Bypass` vale somente para esse processo e não altera a política de execução do sistema.
+`Bypass` vale somente para o processo iniciado.
 
-## Configuração e extensões avaliadas
+## Limites
 
-O workspace usa somente recursos nativos necessários: instruções hierárquicas, skills locais, hooks de ciclo de vida, templates e um validador PowerShell.
+- O modo raiz depende da regra que manda localizar instruções dentro do projeto ativo; elas não entram automaticamente na cadeia inicial.
+- O modo iniciado no Git interno pode não carregar governança ou skills desta raiz.
+- O hook cria o checkpoint antes de compactar, mas não executa outro modelo nem interpreta a transcrição; o Codex mantém o resumo durante o trabalho e o atualiza após compactação.
+- A descoberta automática considera os 20 checkpoints mais recentes e oferece até cinco ativos; os demais continuam acessíveis por `session_id`, `work_key` ou caminho.
+- O validador confirma estrutura, não qualidade semântica.
 
-Não há `.codex/config.toml` compartilhado. Configurações de modelo, personalidade, approvals, sandbox, busca web e perfis dependem do usuário e do ambiente; além disso, camadas `.codex/` de projeto só são carregadas quando o projeto é confiável. Se no futuro houver uma política comum e revisada, ela pode ser adicionada separadamente.
+## Referências
 
-Os hooks compartilhados cobrem somente memória de conversa: `PreCompact` registra o checkpoint antes de compactar e `SessionStart` fornece o identificador da sessão, orienta a atualização pós-compactação e descobre candidatos sem carregar seus corpos. O formato e o ciclo de vida estão em [`.codex/memory/README.md`](.codex/memory/README.md).
-
-Outras extensões atuais — plugins, MCP, Record & Replay, subagentes e metadados `agents/openai.yaml` — continuam disponíveis, mas não resolvem uma necessidade deste núcleo. Adote-as quando surgir integração externa, evento determinístico, workflow demonstrável ou interface distribuível, mantendo permissões e dependências explícitas.
-
-## Boas práticas
-
-- Nomeie o projeto e o resultado desejado no prompt.
-- Mantenha comandos e convenções específicos no `AGENTS.md` do próprio projeto.
-- Use `README-CODEX.md` como mapa curto e abra documentos detalhados somente quando o tema exigir.
-- Prefira busca direcionada a leitura recursiva ampla.
-- Preserve mudanças locais e revise o diff antes de concluir.
-- Execute validações existentes, começando pelas mais próximas da mudança.
-- Informe claramente o que não pôde ser validado.
-- Consulte documentação oficial quando o comportamento de uma ferramenta ou API puder ter mudado.
-- Reavalie regras e skills com exemplos reais; remova instruções que apenas repetem o comportamento padrão do Codex.
-
-## Limitações conhecidas
-
-- A cadeia automática de `AGENTS.md` é definida no início da sessão e não atravessa de forma garantida o Git root de um repositório aninhado.
-- Instruções do projeto ativo são lidas explicitamente no modo raiz; isso é uma convenção de governança deste workspace, não uma segunda cadeia automática do cliente.
-- Como `projects/` é totalmente ignorada, clones novos precisam criar a pasta antes de adicionar o primeiro projeto.
-- O hook garante a existência do arquivo antes da compactação, mas não executa um segundo modelo nem interpreta a transcrição. O conteúdo semântico deve ser mantido pelo Codex durante o trabalho; se estiver pendente, a continuação imediata pós-compactação o reconstrói a partir do contexto preservado.
-- A descoberta consulta cabeçalhos de no máximo 20 checkpoints recentes e oferece no máximo cinco ativos. Memórias mais antigas continuam acessíveis quando o usuário informa `session_id`, `work_key` ou caminho.
-- `Test-Workspace.ps1` valida estrutura e metadados básicos, não a qualidade semântica de uma skill.
-- Recursos do Codex evoluem. Revise periodicamente os links oficiais e valide mudanças em uma sessão nova.
-
-## Fontes oficiais
-
-Estrutura e decisões conferidas na documentação oficial atual e em exemplos mantidos pela OpenAI:
-
-- [Custom instructions with AGENTS.md](https://developers.openai.com/codex/guides/agents-md)
-- [Build skills](https://developers.openai.com/codex/skills)
-- [Config basics](https://developers.openai.com/codex/config-basic)
+- [AGENTS.md](https://developers.openai.com/codex/guides/agents-md)
+- [Skills](https://developers.openai.com/codex/skills)
 - [Hooks](https://developers.openai.com/codex/hooks)
 - [Memories](https://developers.openai.com/codex/memories)
-- [Prompting](https://developers.openai.com/codex/prompting)
-- [Catálogo oficial openai/skills](https://github.com/openai/skills)
-
-As escolhas principais foram manter o `AGENTS.md` enxuto, deixar workflows nas skills, usar descrições discriminantes para ativação, evitar diretórios opcionais vazios e não versionar configurações operacionais sem uma necessidade concreta.
+- [Configuração](https://developers.openai.com/codex/config-basic)
+# AuthApi
