@@ -11,6 +11,10 @@ workspace-ai/
 ├── AGENTS.md
 ├── README.md
 ├── .gitignore
+├── .codex/
+│   ├── hooks.json
+│   ├── hooks/chat-memory.ps1
+│   └── memory/                 # checkpoints versionáveis por conversa
 ├── .agents/
 │   └── skills/
 │       ├── repository-analysis/
@@ -40,6 +44,8 @@ As responsabilidades são separadas deliberadamente:
 
 - `AGENTS.md` define como o Codex deve se comportar neste workspace.
 - `.agents/skills/` descreve como executar categorias específicas de tarefa.
+- `.codex/hooks.json` usa eventos nativos do Codex para proteger e descobrir checkpoints de conversa.
+- `.codex/memory/` guarda memória temporária curta e versionável, vinculada à sessão e ao trabalho.
 - `templates/project/` ajuda cada projeto a manter suas instruções e um índice leve de contexto e documentação.
 - `scripts/` contém somente automação determinística útil ao workspace.
 - `projects/` contém repositórios independentes e nunca é fonte de regras globais.
@@ -73,6 +79,8 @@ As responsabilidades são separadas deliberadamente:
    ```
 
 O modo recomendado é manter a sessão na raiz e selecionar o projeto pelo caminho no prompt. Isso carrega a governança e as skills do workspace e evita que um projeto vizinho entre no contexto por acidente.
+
+Na primeira sessão depois de clonar ou alterar os hooks, execute `/hooks`, revise a definição local e autorize-a. Hooks de projeto não executam antes dessa confirmação e uma mudança no arquivo exige nova revisão.
 
 ## Como adicionar ou preparar um projeto
 
@@ -240,11 +248,13 @@ O uso de `Bypass` vale somente para esse processo e não altera a política de e
 
 ## Configuração e extensões avaliadas
 
-O workspace usa somente recursos nativos necessários: instruções hierárquicas, skills locais, templates e um validador PowerShell.
+O workspace usa somente recursos nativos necessários: instruções hierárquicas, skills locais, hooks de ciclo de vida, templates e um validador PowerShell.
 
 Não há `.codex/config.toml` compartilhado. Configurações de modelo, personalidade, approvals, sandbox, busca web e perfis dependem do usuário e do ambiente; além disso, camadas `.codex/` de projeto só são carregadas quando o projeto é confiável. Se no futuro houver uma política comum e revisada, ela pode ser adicionada separadamente.
 
-Outras extensões atuais — plugins, MCP, hooks, Record & Replay, subagentes e metadados `agents/openai.yaml` — continuam disponíveis, mas não resolvem uma necessidade deste núcleo. Adote-as quando surgir integração externa, evento determinístico, workflow demonstrável ou interface distribuível, mantendo permissões e dependências explícitas.
+Os hooks compartilhados cobrem somente memória de conversa: `PreCompact` registra o checkpoint antes de compactar e `SessionStart` fornece o identificador da sessão, orienta a atualização pós-compactação e descobre candidatos sem carregar seus corpos. O formato e o ciclo de vida estão em [`.codex/memory/README.md`](.codex/memory/README.md).
+
+Outras extensões atuais — plugins, MCP, Record & Replay, subagentes e metadados `agents/openai.yaml` — continuam disponíveis, mas não resolvem uma necessidade deste núcleo. Adote-as quando surgir integração externa, evento determinístico, workflow demonstrável ou interface distribuível, mantendo permissões e dependências explícitas.
 
 ## Boas práticas
 
@@ -263,6 +273,8 @@ Outras extensões atuais — plugins, MCP, hooks, Record & Replay, subagentes e 
 - A cadeia automática de `AGENTS.md` é definida no início da sessão e não atravessa de forma garantida o Git root de um repositório aninhado.
 - Instruções do projeto ativo são lidas explicitamente no modo raiz; isso é uma convenção de governança deste workspace, não uma segunda cadeia automática do cliente.
 - Como `projects/` é totalmente ignorada, clones novos precisam criar a pasta antes de adicionar o primeiro projeto.
+- O hook garante a existência do arquivo antes da compactação, mas não executa um segundo modelo nem interpreta a transcrição. O conteúdo semântico deve ser mantido pelo Codex durante o trabalho; se estiver pendente, a continuação imediata pós-compactação o reconstrói a partir do contexto preservado.
+- A descoberta consulta cabeçalhos de no máximo 20 checkpoints recentes e oferece no máximo cinco ativos. Memórias mais antigas continuam acessíveis quando o usuário informa `session_id`, `work_key` ou caminho.
 - `Test-Workspace.ps1` valida estrutura e metadados básicos, não a qualidade semântica de uma skill.
 - Recursos do Codex evoluem. Revise periodicamente os links oficiais e valide mudanças em uma sessão nova.
 
@@ -273,6 +285,8 @@ Estrutura e decisões conferidas na documentação oficial atual e em exemplos m
 - [Custom instructions with AGENTS.md](https://developers.openai.com/codex/guides/agents-md)
 - [Build skills](https://developers.openai.com/codex/skills)
 - [Config basics](https://developers.openai.com/codex/config-basic)
+- [Hooks](https://developers.openai.com/codex/hooks)
+- [Memories](https://developers.openai.com/codex/memories)
 - [Prompting](https://developers.openai.com/codex/prompting)
 - [Catálogo oficial openai/skills](https://github.com/openai/skills)
 

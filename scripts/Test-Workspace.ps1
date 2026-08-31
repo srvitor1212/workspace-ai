@@ -38,6 +38,9 @@ $requiredFiles = @(
     'AGENTS.md',
     'README.md',
     '.gitignore',
+    '.codex/hooks.json',
+    '.codex/hooks/chat-memory.ps1',
+    '.codex/memory/README.md',
     'templates/project/AGENTS.md',
     'templates/project/README-CODEX.md'
 )
@@ -133,6 +136,22 @@ foreach ($requiredSkill in $requiredSkills) {
     }
 }
 
+$hooksFile = Join-Path $resolvedRoot '.codex/hooks.json'
+if (Test-Path -LiteralPath $hooksFile -PathType Leaf) {
+    try {
+        $hooksConfig = Get-Content -Raw -LiteralPath $hooksFile | ConvertFrom-Json
+        if ($null -eq $hooksConfig.hooks.SessionStart) {
+            Add-ValidationFailure 'Missing SessionStart chat-memory hook.'
+        }
+        if ($null -eq $hooksConfig.hooks.PreCompact) {
+            Add-ValidationFailure 'Missing PreCompact chat-memory hook.'
+        }
+    }
+    catch {
+        Add-ValidationFailure "Invalid .codex/hooks.json: $($_.Exception.Message)"
+    }
+}
+
 $gitCommand = Get-Command git -ErrorAction SilentlyContinue
 if ($null -eq $gitCommand) {
     Add-ValidationFailure 'Git is required to verify that projects/ is ignored.'
@@ -141,6 +160,11 @@ else {
     & $gitCommand.Source -C $resolvedRoot check-ignore -q -- 'projects/__workspace_validation_probe__'
     if ($LASTEXITCODE -ne 0) {
         Add-ValidationFailure 'The root .gitignore does not ignore projects/.'
+    }
+
+    & $gitCommand.Source -C $resolvedRoot check-ignore -q -- '.codex/memory/sessions/__workspace_validation_probe__.md'
+    if ($LASTEXITCODE -eq 0) {
+        Add-ValidationFailure 'Conversation checkpoints under .codex/memory/sessions/ must not be ignored.'
     }
 }
 

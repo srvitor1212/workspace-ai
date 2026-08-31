@@ -1,0 +1,34 @@
+{
+  "description": "Checkpoints leves de conversa antes da compactacao e descoberta consentida entre chats.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -NoProfile -File \"$(git rev-parse --show-toplevel)/.codex/hooks/chat-memory.ps1\"",
+            "commandWindows": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"& { $repo = (git rev-parse --show-toplevel); & (Join-Path $repo '.codex/hooks/chat-memory.ps1') }\"",
+            "timeout": 5,
+            "statusMessage": "Verificando checkpoints de conversa",
+            "additionalContextLimit": 4000
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "manual|auto",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -NoProfile -File \"$(git rev-parse --show-toplevel)/.codex/hooks/chat-memory.ps1\"",
+            "commandWindows": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"& { $repo = (git rev-parse --show-toplevel); & (Join-Path $repo '.codex/hooks/chat-memory.ps1') }\"",
+            "timeout": 5,
+            "statusMessage": "Registrando checkpoint antes da compactacao"
+          }
+        ]
+      }
+    ]
+  }
+}

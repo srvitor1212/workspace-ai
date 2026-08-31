@@ -24,6 +24,15 @@
 - Se nao existir indice, liste nomes de arquivos ou busque titulos e termos relevantes somente dentro do projeto ativo; abra o menor conjunto de documentos capaz de responder a solicitacao e amplie uma lacuna por vez.
 - Trate documentacao como guia, nao como prova final. Confirme no codigo, configuracao ou testes as afirmacoes que afetarem uma analise ou mudanca.
 
+## Memoria temporaria de conversa
+
+- Use o caminho de checkpoint e o `session_id` fornecidos pelo hook `SessionStart`; nao enumere `.codex/memory/sessions/` por conta propria.
+- Em uma conversa nova ou limpa, se o hook apresentar checkpoints `active`, mostre somente essa lista curta e pergunte ao usuario se deseja carregar um deles. Nao leia o corpo de nenhuma memoria sem a confirmacao ou uma solicitacao explicita pelo `session_id`, `work_key` ou caminho.
+- Para trabalho nao trivial que possa atravessar varios turnos, crie o checkpoint da sessao assim que objetivo e escopo estiverem definidos. Atualize-o em marcos relevantes, antes de `/compact` e quando o cliente indicar que resta no maximo cerca de 25% da janela de contexto. Nao tente estimar tokens apenas pelo tamanho da conversa.
+- Depois de uma compactacao, atualize imediatamente o checkpoint indicado pelo hook antes de continuar: registre apenas objetivo, estado verificado, decisoes, arquivos e mudancas, validacoes, proximos passos, bloqueios e riscos. Preencha `work_key` e `active_project`, marque `checkpoint_state: 'ready'` e renove `updated_at`.
+- Vincule a memoria a issue, branch, ticket ou slug da implementacao em `work_key` e ao caminho do projeto em `active_project`. Ao terminar, marque `status: 'completed'`; se o trabalho for descartado, use `abandoned`.
+- Mantenha o checkpoint curto e operacional. Nunca grave secrets, raciocinio interno, transcricoes, grandes saidas de ferramentas ou copias de documentacao. Consulte `.codex/memory/README.md` somente quando precisar do formato ou do procedimento completo.
+
 ## Forma de trabalhar
 
 - Aplique profundidade proporcional a tarefa. Em tarefas simples, avance sem criar cerimonia desnecessaria.
