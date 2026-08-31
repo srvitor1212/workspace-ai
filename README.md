@@ -110,3 +110,4 @@ pwsh -NoProfile -File .\scripts\Test-Workspace.ps1
 - [Memories](https://developers.openai.com/codex/memories)
 - [Configuração](https://developers.openai.com/codex/config-basic)
 # AuthApi
+# AuthApi
