@@ -1,0 +1,7 @@
+interface:
+  display_name: "Feature Discovery"
+  short_description: "Entrevista antes de planejar funcionalidades"
+  default_prompt: "Use $feature-discovery para mapear esta funcionalidade antes da implementação."
+
+policy:
+  allow_implicit_invocation: true

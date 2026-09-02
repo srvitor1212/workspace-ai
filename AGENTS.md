@@ -29,6 +29,14 @@ Cada repositório dentro de `projects/` deve ter seu próprio `AGENTS.md`. Isso 
 - Atualize `docs/` quando houver mudanças de arquitetura, API, segurança, configuração ou fluxo de execução.
 - Registre decisões técnicas relevantes de forma curta e objetiva.
 
+## Skills
+
+- Use as skills disponíveis em `.codex/skills/` quando a tarefa corresponder à descrição delas.
+- Considere o `SKILL.md` de cada skill como sua fonte principal de instruções.
+- Não aplique uma skill a tarefas fora do seu objetivo.
+- Quando uma skill for explicitamente solicitada e não estiver disponível, informe o usuário.
+- Respeite as confirmações e limites definidos pela skill antes de executar alterações.
+
 ## Banco de dados e segurança
 
 - Não acesse, atualize ou exclua dados ou tabelas sem solicitação explícita do usuário.
