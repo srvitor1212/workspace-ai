@@ -31,6 +31,9 @@ Cada repositório dentro de `projects/` deve ter seu próprio `AGENTS.md`. Isso 
 
 ## Skills
 
+- Quando o usuário quiser iniciar a codificação de um plano confirmado, sugira `$code-steps` e peça confirmação para continuar.
+- `$code-steps` deve implementar somente as etapas autorizadas, aguardar o teste do usuário e não criar commits automaticamente.
+
 - Ao iniciar uma nova funcionalidade, sugira ao usuário usar `$feature-discovery`, mas não torne isso obrigatório.
 - Quando houver uma análise confirmada e o usuário quiser organizar a implementação, sugira `$implementation-plan`.
 - As skills de descoberta e planejamento apenas orientam e documentam o trabalho; não alteram código nem criam testes unitários sem solicitação explícita.

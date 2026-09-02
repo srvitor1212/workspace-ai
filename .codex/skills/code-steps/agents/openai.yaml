@@ -1,0 +1,7 @@
+interface:
+  display_name: "Codar Steps"
+  short_description: "Implementa etapas com validação do usuário"
+  default_prompt: "Use $code-steps para implementar uma etapa do plano e aguardar minha confirmação após o teste."
+
+policy:
+  allow_implicit_invocation: true

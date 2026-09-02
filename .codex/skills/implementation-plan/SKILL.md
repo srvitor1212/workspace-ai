@@ -7,6 +7,8 @@ metadata:
 
 # Implementation Plan
 
+Após salvar o plano com sucesso, sugira ao usuário usar `$code-steps` para implementar as etapas. Não invoque essa skill automaticamente; peça confirmação antes de continuar.
+
 O unico arquivo que esta skill pode criar e o plano de implementacao, apos a confirmacao explicita do usuario. Nao altere arquivos existentes.
 
 Crie somente um plano de implementação para uma funcionalidade já analisada. Esta skill não altera código, configuração ou documentação técnica do projeto e não cria testes unitários.
