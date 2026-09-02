@@ -31,6 +31,10 @@ Cada repositório dentro de `projects/` deve ter seu próprio `AGENTS.md`. Isso 
 
 ## Skills
 
+- Ao iniciar uma nova funcionalidade, sugira ao usuário usar `$feature-discovery`, mas não torne isso obrigatório.
+- Quando houver uma análise confirmada e o usuário quiser organizar a implementação, sugira `$implementation-plan`.
+- As skills de descoberta e planejamento apenas orientam e documentam o trabalho; não alteram código nem criam testes unitários sem solicitação explícita.
+
 - Use as skills disponíveis em `.codex/skills/` quando a tarefa corresponder à descrição delas.
 - Considere o `SKILL.md` de cada skill como sua fonte principal de instruções.
 - Não aplique uma skill a tarefas fora do seu objetivo.

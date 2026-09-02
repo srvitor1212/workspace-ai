@@ -35,6 +35,8 @@ Quando o projeto for novo, pergunte o suficiente para definir o problema, usuár
 
 ## Fechamento
 
+Após criar a análise com sucesso, informe o caminho do arquivo e sugira ao usuário usar `$implementation-plan` para transformar a análise em etapas incrementais. Não invoque a skill automaticamente sem que o usuário escolha continuar.
+
 Quando houver informação suficiente:
 
 1. Apresente um resumo curto do entendimento.
