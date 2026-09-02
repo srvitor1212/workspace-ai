@@ -1,20 +1,48 @@
-# Workspace de ia com Codex
+# Instruções do workspace
 
 ## Objetivo
-Este repositório é um workspace de fluxos de trabalho para desenvolvimento de sistemas com IA. Ele centraliza e organiza a forma de localizar os repositórios de trabalho, estruturar documentação, análises de código e planos de implementação.
 
-## Instruções gerais do workspace
-- Preserve a arquitetura e padrões do projeto que está sendo alterado.
-- Priorize criar código simples, limpo e de fácil entendimento humano.
-- Sugira melhorias de código nos fontes que forem alterados durante uma implementação, porém, sempre sugira e peça aprovação do usuário para implementar essas melhorias.
-- Nunca acesse, atualize ou delete dados e tabelas do banco de dados sem a explicita solicitação do usuário e, mesmo que solicitado deixe claro que é uma ação perigosa e peça uma segunda confirmação.
+Este repositório organiza fluxos de trabalho para desenvolvimento de sistemas com IA. Os repositórios de trabalho ficam em `projects/` e mantêm sua própria documentação.
+
+## Regras gerais
+
 - Trabalhe somente no projeto solicitado.
-- Execute os testes ou a validação disponível antes de concluir.
-- Sugira a colocação de logs em pontos importantes de decisão quando aplicável.
-    - Use nível de log correto de acordo com a ferramenta de logs do repo de trabalho.
+- Preserve a arquitetura, os padrões e as decisões existentes do projeto.
+- Prefira código simples, legível e fácil de manter.
+- Antes de alterar arquivos, verifique o estado do Git e leia o contexto do projeto.
+- Ao finalizar, revise o diff e informe os arquivos alterados, os testes executados e qualquer limitação.
+- Não altere arquivos gerados, como `bin/`, `obj/` ou `.vs/`, salvo solicitação explícita.
+- Sugira melhorias encontradas durante a implementação, mas peça aprovação antes de implementá-las quando elas não fizerem parte da tarefa solicitada.
 
-## Estrutura desse workspace e dos repositórios(repo) de trabalho
-- Os repositórios de trabalho devem ficar na pasta `projects/`.
-    - Exemplo: `projects/exemplo-de-projeto`.
-- Procure otimizar a leitura dos repos de trabalho e procure por `projects/<name>/README.md` e/ou `projects/<name>/AGENTS.md`, quando disponível, para entender o contexto geral.
-    - Quando esses arquivos não existirem, sugiro para o usuário criá-los e explique os benefícios deles.
+## Como localizar e entender um projeto
+
+1. Confirme qual projeto foi solicitado.
+2. Procure, nesta ordem, por `AGENTS.md`, `README.md`, `docs/` e arquivos de solução ou configuração.
+3. Leia a documentação do próprio projeto antes de propor alterações.
+4. Não use regras ou decisões de outro projeto sem autorização explícita.
+
+Cada repositório dentro de `projects/` deve ter seu próprio `AGENTS.md`. Isso é importante porque o Codex pode ser iniciado diretamente na raiz desse repositório.
+
+## Documentação
+
+- Mantenha a documentação dentro do repositório ao qual ela pertence.
+- Atualize `docs/` quando houver mudanças de arquitetura, API, segurança, configuração ou fluxo de execução.
+- Registre decisões técnicas relevantes de forma curta e objetiva.
+
+## Banco de dados e segurança
+
+- Não acesse, atualize ou exclua dados ou tabelas sem solicitação explícita do usuário.
+- Mesmo quando solicitado, avise sobre o risco e peça uma segunda confirmação antes de executar operações destrutivas ou irreversíveis.
+- Nunca exponha senhas, tokens, chaves ou dados pessoais em código, logs, commits ou respostas.
+
+## Logs
+
+- Sugira logs em pontos importantes de decisão quando aplicável.
+- Use o nível adequado para a ferramenta de logs do projeto.
+- Não registre segredos, credenciais ou dados pessoais.
+
+## Validação
+
+- Execute os testes disponíveis antes de concluir.
+- Se não houver testes, execute build, lint ou outra validação apropriada.
+- Se alguma validação não puder ser executada, informe o motivo claramente.
