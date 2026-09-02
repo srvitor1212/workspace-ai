@@ -1,2 +1,2 @@
-# Repositorios de trabalho
-/projects/
+# Repositorios de trabalho: manter a pasta, ignorar todo o conteudo.
+/projects/*
