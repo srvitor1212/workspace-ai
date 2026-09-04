@@ -25,11 +25,11 @@ Não altere código, configuração ou documentação durante a entrevista.
 
 ## Entrevista em etapas
 
-Faça de 3 a 5 perguntas por rodada e aguarde as respostas. Comece pelas perguntas mais importantes para o objetivo atual. Adapte as perguntas ao que já existe no repositório.
+Faça até 5 perguntas inicias e aguarde as respostas. Comece pelas perguntas mais importantes para o objetivo atual. Adapte as perguntas ao que já existe no repositório.
 
-Depois da primeira resposta, faça mais 2 ou 3 perguntas de aprofundamento, somente sobre lacunas relevantes. Evite repetir perguntas já respondidas e não transforme a entrevista em um questionário genérico.
+Depois da primeira resposta, reutilize as respostas para montar novas perguntas mais aprofundadas, somente sobre lacunas relevantes. Evite repetir perguntas já respondidas e não transforme a entrevista em um questionário genérico.
 
-Procure fazer no máximo 3 rodadas de perguntas, porém, se ainda estiver muito vago pergunte ao usuário se pode ter mais rodadas de perguntas para melhor entendimento.
+Procure fazer no máximo 3 rodadas adicionais com o máximo de 3 de perguntas, porém, se ainda estiver muito vago pergunte ao usuário se pode ter mais rodadas de perguntas para melhor entendimento.
 
 Quando o projeto for novo, pergunte o suficiente para definir o problema, usuários, plataforma, tecnologias preferidas, persistência e integrações necessárias. Quando o projeto já existir, priorize impacto no comportamento atual, compatibilidade, dados, APIs, telas, permissões e testes.
 
