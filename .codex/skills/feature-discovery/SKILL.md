@@ -25,17 +25,15 @@ Não altere código, configuração ou documentação durante a entrevista.
 
 ## Entrevista em etapas
 
-Faça até 5 perguntas inicias e aguarde as respostas. Comece pelas perguntas mais importantes para o objetivo atual. Adapte as perguntas ao que já existe no repositório.
+Faça até 5 perguntas iniciais e aguarde as respostas. Comece pelas perguntas mais importantes para o objetivo atual. Adapte as perguntas ao que já existe no repositório.
 
-Depois da primeira resposta, reutilize as respostas para montar novas perguntas mais aprofundadas, somente sobre lacunas relevantes. Evite repetir perguntas já respondidas e não transforme a entrevista em um questionário genérico.
+Depois de receber as respostas da primeira rodada, reutilize-as para montar novas perguntas mais aprofundadas, somente sobre lacunas relevantes. Evite repetir perguntas já respondidas e não transforme a entrevista em um questionário genérico.
 
-Procure fazer no máximo 3 rodadas adicionais com o máximo de 3 de perguntas, porém, se ainda estiver muito vago pergunte ao usuário se pode ter mais rodadas de perguntas para melhor entendimento.
+Faça no máximo 3 rodadas adicionais, com até 3 perguntas em cada rodada. Se ainda estiver muito vago, pergunte ao usuário se ele autoriza novas rodadas para melhorar o entendimento.
 
 Quando o projeto for novo, pergunte o suficiente para definir o problema, usuários, plataforma, tecnologias preferidas, persistência e integrações necessárias. Quando o projeto já existir, priorize impacto no comportamento atual, compatibilidade, dados, APIs, telas, permissões e testes.
 
 ## Fechamento
-
-Após criar a análise com sucesso, informe o caminho do arquivo e sugira ao usuário usar `$implementation-plan` para transformar a análise em etapas incrementais. Não invoque a skill automaticamente sem que o usuário escolha continuar.
 
 Quando houver informação suficiente:
 
@@ -76,4 +74,4 @@ Mantenha o documento objetivo e enxuto, com estas seções:
 ## Próximos passos
 ```
 
-Registre fatos confirmados, decisões tomadas e pontos pendentes. Marque como pendente qualquer informação que não tenha sido confirmada. Depois de salvar, informe o caminho do arquivo. A implementação só deve começar em uma solicitação posterior ou quando o usuário pedir explicitamente.
+Registre fatos confirmados, decisões tomadas e pontos pendentes. Marque como pendente qualquer informação que não tenha sido confirmada. Depois de criar a análise com sucesso, informe o caminho do arquivo e sugira ao usuário usar `$implementation-plan` para transformar a análise em etapas incrementais. Não invoque a skill automaticamente sem que o usuário escolha continuar. A implementação só deve começar em uma solicitação posterior ou quando o usuário pedir explicitamente.
