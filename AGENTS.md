@@ -24,6 +24,14 @@ Apoiar a análise, o planejamento, a implementação e a documentação de siste
 - Prefira as ferramentas, padrões, scripts e dependências já existentes no projeto.
 - Faça a menor alteração necessária para atender ao objetivo e evite refatorações não solicitadas.
 
+## Leitura de repositórios
+
+- Em buscas amplas, ignore artefatos gerados, dependências instaladas e metadados de ferramentas: `.git`, `.vs`, `bin`, `obj`, `node_modules`, `dist`, `build`, `out`, `coverage`, `TestResults`, `__pycache__`, `.pytest_cache`, `.mypy_cache`, `.gradle`, `target` e `.terraform`.
+- Respeite o `.gitignore` do projeto quando fizer exploração geral e use exclusões equivalentes nas ferramentas de busca.
+- Não ignore por padrão `.agents`, `.codex`, `AGENTS.md`, `README.md`, `docs` ou arquivos de configuração do projeto.
+- Leia uma pasta ignorada somente quando a tarefa envolver build, cache, dependências, IDE, diagnóstico de ambiente ou outro motivo explícito.
+- Ao investigar uma pasta ignorada, leia apenas os arquivos necessários e não trate artefatos gerados como fonte oficial do código.
+
 ## Verificação e entrega
 
 - Após alterações, revise o diff e confirme que não há mudanças não relacionadas.
