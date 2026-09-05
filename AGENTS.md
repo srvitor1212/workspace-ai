@@ -1,63 +1,20 @@
-# Instruções do workspace
+# Workspace de IA com Codex
 
 ## Objetivo
+Auxiliar na análise e implementação de sistemas.
 
-Este repositório organiza fluxos de trabalho para desenvolvimento de sistemas com IA. Os repositórios de trabalho ficam em `projects/` e mantêm sua própria documentação.
+## Estrutura
+- Os repositórios de trabalho devem estar em `projects/<nome-do-projeto>`.
+- A documentação de cada projeto de trabalho deve ficar em `projects/<nome-do-projeto>/docs`.
+- As skills desse workspace estão localizadas em `.codex/skills`.
+
+## Modo de operar
+- Entenda a solicitação do usuário e procure por skills existentes que se apliquem.
+- Sugira melhorias de código ou arquitetura ao usuário quando for relevante.
 
 ## Regras gerais
+- Trabalhe apenas no projeto que foi solicitado.
+- Preserve a arquitetura, os padrões e as decisões existentes do projeto.~
+- Não acessar bancos de dados sem autorização explicita.
+- Não exponha segredos da aplicação em commits ou logs.
 
-- Trabalhe somente no projeto solicitado.
-- Preserve a arquitetura, os padrões e as decisões existentes do projeto.
-- Prefira código simples, legível e fácil de manter.
-- Antes de alterar arquivos, verifique o estado do Git e leia o contexto do projeto.
-- Ao finalizar, revise o diff e informe os arquivos alterados, os testes executados e qualquer limitação.
-- Não altere arquivos gerados, como `bin/`, `obj/` ou `.vs/`, salvo solicitação explícita.
-- Sugira melhorias encontradas durante a implementação, mas peça aprovação antes de implementá-las quando elas não fizerem parte da tarefa solicitada.
-
-## Como localizar e entender um projeto
-
-1. Confirme qual projeto foi solicitado.
-2. Procure, nesta ordem, por `AGENTS.md`, `README.md`, `docs/` e arquivos de solução ou configuração.
-3. Leia a documentação do próprio projeto antes de propor alterações.
-4. Não use regras ou decisões de outro projeto sem autorização explícita.
-
-Cada repositório dentro de `projects/` deve ter seu próprio `AGENTS.md`. Isso é importante porque o Codex pode ser iniciado diretamente na raiz desse repositório.
-
-## Documentação
-
-- Mantenha a documentação dentro do repositório ao qual ela pertence.
-- Atualize `docs/` quando houver mudanças de arquitetura, API, segurança, configuração ou fluxo de execução.
-- Registre decisões técnicas relevantes de forma curta e objetiva.
-
-## Skills
-
-- Quando o usuário quiser iniciar a codificação de um plano confirmado, sugira `$code-steps` e peça confirmação para continuar.
-- `$code-steps` deve implementar somente as etapas autorizadas, aguardar o teste do usuário e não criar commits automaticamente.
-
-- Ao iniciar uma nova funcionalidade, sugira ao usuário usar `$feature-discovery`, mas não torne isso obrigatório.
-- Quando houver uma análise confirmada e o usuário quiser organizar a implementação, sugira `$implementation-plan`.
-- As skills de descoberta e planejamento apenas orientam e documentam o trabalho; não alteram código nem criam testes unitários sem solicitação explícita.
-
-- Use as skills disponíveis em `.codex/skills/` quando a tarefa corresponder à descrição delas.
-- Considere o `SKILL.md` de cada skill como sua fonte principal de instruções.
-- Não aplique uma skill a tarefas fora do seu objetivo.
-- Quando uma skill for explicitamente solicitada e não estiver disponível, informe o usuário.
-- Respeite as confirmações e limites definidos pela skill antes de executar alterações.
-
-## Banco de dados e segurança
-
-- Não acesse, atualize ou exclua dados ou tabelas sem solicitação explícita do usuário.
-- Mesmo quando solicitado, avise sobre o risco e peça uma segunda confirmação antes de executar operações destrutivas ou irreversíveis.
-- Nunca exponha senhas, tokens, chaves ou dados pessoais em código, logs, commits ou respostas.
-
-## Logs
-
-- Sugira logs em pontos importantes de decisão quando aplicável.
-- Use o nível adequado para a ferramenta de logs do projeto.
-- Não registre segredos, credenciais ou dados pessoais.
-
-## Validação
-
-- Execute os testes disponíveis antes de concluir.
-- Se não houver testes, execute build, lint ou outra validação apropriada.
-- Se alguma validação não puder ser executada, informe o motivo claramente.
