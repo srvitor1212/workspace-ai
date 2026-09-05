@@ -43,4 +43,3 @@ Apoiar a análise, o planejamento, a implementação e a documentação de siste
 - Preserve o estado atual do repositório e alterações não relacionadas.
 - Não crie commits, branches, pull requests, pushes ou publicações sem solicitação explícita.
 - Não use operações que descartem alterações, como `git reset --hard` ou `git checkout --`, sem solicitação explícita.
-
