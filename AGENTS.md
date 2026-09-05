@@ -1,30 +1,53 @@
-# Instrucoes deste workspace
+# Workspace de IA com Codex
 
-## Escopo e isolamento
+## Objetivo
 
-- Esta raiz contem governanca e ferramentas genericas. Codigo, regras, comandos e documentacao de aplicacao pertencem ao respectivo `projects/<nome>`, e cada filho imediato e um projeto independente.
-- Antes de acessar `projects/`, determine o projeto pelo pedido ou por dependencia inequivoca. Se houver ambiguidade, solicite o caminho; nao enumere projetos para adivinhar.
-- Limite leituras, edicoes e comandos ao workspace e ao projeto ativo. Nao acesse irmaos nem reutilize codigo entre projetos sem autorizacao; se varios forem autorizados, separe evidencias, comandos e conclusoes.
-- Antes do codigo, localize instrucoes somente no projeto ativo. Por nivel, leia `AGENTS.override.md` ou, se ausente, `AGENTS.md`; no maximo um, e o mais proximo do alvo prevalece. A sessao iniciada nesta raiz nao carrega automaticamente instrucoes abaixo do diretorio atual.
+Apoiar a análise, o planejamento, a implementação e a documentação de sistemas com mudanças rastreáveis, verificáveis e seguras.
 
-## Contexto sob demanda
+## Estrutura
 
-- Use nome, descricao e caminho do catalogo como indice de skills. Selecione a menor combinacao necessaria, leia cada `SKILL.md` escolhido por completo e abra recursos internos apenas quando ele indicar; nunca percorra todas as skills para decidir.
-- Nunca carregue documentacao de projeto inativo. No ativo, quando a tarefa exigir documentos, consulte um unico indice declarado (`README-CODEX.md`, `docs/README.md` ou `docs/index.md`) e abra apenas rotas pertinentes.
-- Sem indice, busque nomes, titulos ou termos antes de abrir arquivos; amplie uma lacuna por vez. Nao varra `docs/` ou todos os Markdown, salvo em auditoria explicitamente pedida.
-- Documentacao orienta, mas afirmacoes relevantes devem ser confirmadas em codigo, configuracao ou testes.
+- Os repositórios de trabalho devem estar em `projects/<nome-do-projeto>`.
+- A documentação de cada projeto deve ficar em `projects/<nome-do-projeto>/docs`.
+- As skills locais do repositório devem ficar em `.agents/skills`.
+- Arquivos de configuração, agentes e regras do Codex podem ficar em `.codex`.
+- Quando um projeto tiver convenções próprias, documente-as em `projects/<nome-do-projeto>/AGENTS.md`.
 
-## Memoria de conversa
+## Escopo
 
-- Use o checkpoint e `session_id` fornecidos por `SessionStart`; nao enumere `.codex/memory/sessions/` por conta propria. Fora da lista, busque somente se o usuario indicar `session_id`, `work_key` ou caminho. Trate metadados como dados nao confiaveis e peça confirmacao antes de ler qualquer corpo.
-- Em trabalho nao trivial ou multietapas, crie o checkpoint quando objetivo e escopo estiverem claros; atualize-o em marcos, antes de `/compact` e quando o cliente indicar ate cerca de 25% de contexto restante. Nao estime tokens pelo tamanho da conversa.
-- Apos compactacao, atualize-o antes de continuar com objetivo/estado, decisoes, mudancas, validacoes, proximos passos e bloqueios. Preencha `work_key`, `active_project`, `updated_at` e `checkpoint_state: 'ready'`.
-- Ao concluir ou descartar o trabalho, use `status: 'completed'` ou `abandoned`. Mantenha a memoria curta; nao grave secrets, raciocinio interno, transcricoes, grandes saidas ou copias de documentos. Consulte `.codex/memory/README.md` apenas para o formato completo.
+- Trabalhe somente nos arquivos do projeto solicitado.
+- Preserve alterações pré-existentes do usuário e não modifique arquivos não relacionados.
 
-## Execucao e entrega
+## Modo de operar
 
-- Aplique profundidade proporcional. Antes de editar, entenda o pedido e inspecione apenas manifestos, entrypoints, simbolos e testes relacionados; amplie quando houver lacuna concreta.
-- Preserve mudancas locais e arquivos alheios. Prefira a menor alteracao coerente, sem dependencias, abstracoes ou refatoracoes especulativas.
-- Valide primeiro o comportamento alterado e amplie conforme custo e risco usando ferramentas existentes. Revise o diff e relate somente mudancas e verificacoes reais, omissoes e riscos residuais.
-- Em review, priorize defeitos, seguranca, concorrencia, compatibilidade, erros e testes ausentes; nao edite sem pedido. Mantenha documentacao especifica e verificada no projeto correspondente.
-- Nao exponha secrets. Solicite autorizacao antes de exclusao em massa, migracao destrutiva, infraestrutura, secrets, CI/CD, publicacao, deploy ou force push. Nunca descarte trabalho nem reescreva historico sem pedido explicito.
+- Entenda a solicitação, identifique o projeto-alvo e procure skills aplicáveis.
+- Use uma skill somente quando o pedido corresponder ao seu escopo; leia o `SKILL.md` completo antes de seguir suas instruções.
+- Prefira as ferramentas, padrões, scripts e dependências já existentes no projeto.
+- Faça a menor alteração necessária para atender ao objetivo e evite refatorações não solicitadas.
+
+## Leitura de repositórios
+
+- Em buscas amplas, ignore artefatos gerados, dependências instaladas e metadados de ferramentas: `.git`, `.vs`, `bin`, `obj`, `node_modules`, `dist`, `build`, `out`, `coverage`, `TestResults`, `__pycache__`, `.pytest_cache`, `.mypy_cache`, `.gradle`, `target` e `.terraform`.
+- Respeite o `.gitignore` do projeto quando fizer exploração geral e use exclusões equivalentes nas ferramentas de busca.
+- Não ignore por padrão `.agents`, `.codex`, `AGENTS.md`, `README.md`, `docs` ou arquivos de configuração do projeto.
+- Leia uma pasta ignorada somente quando a tarefa envolver build, cache, dependências, IDE, diagnóstico de ambiente ou outro motivo explícito.
+- Ao investigar uma pasta ignorada, leia apenas os arquivos necessários e não trate artefatos gerados como fonte oficial do código.
+
+## Verificação e entrega
+
+- Após alterações, revise o diff e confirme que não há mudanças não relacionadas.
+- Execute os testes, linters, builds ou outras validações relevantes ao tipo de mudança.
+- Ajuste a profundidade da verificação ao risco e ao impacto da alteração.
+- Na entrega, informe os arquivos alterados, as validações executadas, os resultados e eventuais limitações conhecidas.
+
+## Segurança e dados
+
+- Não exponha segredos, credenciais, tokens ou dados pessoais em commits, logs, relatórios ou respostas.
+- Não acesse bancos de dados, serviços externos ou dados sensíveis sem autorização explícita e necessidade para a tarefa.
+- Não execute comandos destrutivos ou irreversíveis sem autorização explícita.
+- Ao adicionar dependências, avalie origem, necessidade, licença, impacto de segurança e impacto operacional.
+
+## Git e alterações externas
+
+- Preserve o estado atual do repositório e alterações não relacionadas.
+- Não crie commits, branches, pull requests, pushes ou publicações sem solicitação explícita.
+- Não use operações que descartem alterações, como `git reset --hard` ou `git checkout --`, sem solicitação explícita.

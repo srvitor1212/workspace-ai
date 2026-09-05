@@ -1,12 +1,2 @@
-# Independent repositories managed through this workspace
-/projects/
-
-# Local Codex output and temporary files
-/.codex-log/
-/tmp/
-*.log
-*.tmp
-
-# Operating-system metadata
-.DS_Store
-Thumbs.db
+# Repositorios de trabalho: manter a pasta, ignorar todo o conteudo.
+/projects/*
