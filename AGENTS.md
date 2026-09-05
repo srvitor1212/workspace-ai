@@ -1,4 +1,4 @@
-# Workspace de IA com Codex
+﻿# Workspace de IA com Codex
 
 ## Objetivo
 
