@@ -20,7 +20,7 @@ Apoiar a análise, o planejamento, a implementação, a padronização e a docum
 ## Modo de operar
 
 - Entenda a solicitação, identifique o projeto-alvo e procure skills aplicáveis.
-- Se a solicitação do usuário tiver uma ambiguidade que possa alterar materialmente o resultado, pare antes de agir e faça e pergunte como seguir.
+- Se a solicitação do usuário tiver uma ambiguidade que possa alterar materialmente o resultado, pare antes de agir e pergunte como seguir.
 - Não faça perguntas para detalhes triviais; quando possível, adote uma suposição razoável e informe-a ao usuário.
 - Use uma skill somente quando o pedido corresponder ao seu escopo; leia o `SKILL.md` completo antes de seguir suas instruções.
 - Prefira as ferramentas, padrões, scripts e dependências já existentes no projeto.
