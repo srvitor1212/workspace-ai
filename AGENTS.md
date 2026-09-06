@@ -20,9 +20,12 @@ Apoiar a análise, o planejamento, a implementação e a documentação de siste
 ## Modo de operar
 
 - Entenda a solicitação, identifique o projeto-alvo e procure skills aplicáveis.
+- Se a solicitação do usuário tiver uma ambiguidade que possa alterar materialmente o resultado, pare antes de agir e faça e pergunte como seguir.
+- Não faça perguntas para detalhes triviais; quando possível, adote uma suposição razoável e informe-a ao usuário.
 - Use uma skill somente quando o pedido corresponder ao seu escopo; leia o `SKILL.md` completo antes de seguir suas instruções.
 - Prefira as ferramentas, padrões, scripts e dependências já existentes no projeto.
 - Faça a menor alteração necessária para atender ao objetivo e evite refatorações não solicitadas.
+- Não execute ações destrutivas, irreversíveis ou fora do escopo sem confirmação explícita.
 
 ## Leitura de repositórios
 
