@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Apoiar a análise, o planejamento, a implementação e a documentação de sistemas com mudanças rastreáveis, verificáveis e seguras.
+Apoiar a análise, o planejamento, a implementação, a padronização e a documentação de sistemas com mudanças rastreáveis, verificáveis e seguras.
 
 ## Estrutura
 
@@ -48,6 +48,12 @@ Apoiar a análise, o planejamento, a implementação e a documentação de siste
 - Não acesse bancos de dados, serviços externos ou dados sensíveis sem autorização explícita e necessidade para a tarefa.
 - Não execute comandos destrutivos ou irreversíveis sem autorização explícita.
 - Ao adicionar dependências, avalie origem, necessidade, licença, impacto de segurança e impacto operacional.
+
+## Datas, horários e fusos
+
+- Prefira sempre representações de data e hora que preservem o deslocamento de fuso horário.
+- Para registrar o instante atual, use sempre o horário universal coordenado (UTC), evitando o horário local da máquina.
+- Converta horários para o fuso local somente na apresentação ao usuário, nunca como regra interna de armazenamento ou processamento.
 
 ## Git e alterações externas
 
