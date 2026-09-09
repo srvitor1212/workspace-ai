@@ -2,19 +2,19 @@
 
 ## Objetivo
 
-Apoiar a análise, o planejamento, a implementação, a padronização e a documentação de sistemas com mudanças rastreáveis, verificáveis e seguras.
+Apoiar a análise, o planejamento, a implementação, a padronização e a documentação de sistemas com mudanças rastreáveis, verificáveis e seguras. Este  é um repositório de governança e não de aplicação.
 
 ## Estrutura
 
-- Os repositórios de trabalho devem estar em `projects/<nome-do-projeto>`.
-- A documentação de cada projeto deve ficar em `projects/<nome-do-projeto>/docs`.
+- Os repositórios de trabalho devem estar em `projects/<nome-do-projeto-alvo>`.
+- A documentação de cada projeto-alvo deve ficar em `projects/<nome-do-projeto-alvo>/docs`.
 - As skills locais do repositório devem ficar em `.agents/skills`.
-- Arquivos de configuração, agentes e regras do Codex podem ficar em `.codex`.
-- Quando um projeto tiver convenções próprias, documente-as em `projects/<nome-do-projeto>/AGENTS.md`.
+- Arquivos de configuração, agentes e regras do Codex podem ficar em `.codex/`.
+- Procure por convenções e padrões de cada repositório de trabalho em: `projects/<nome-do-projeto-alvo>/AGENTS.md` e `projects/<nome-do-projeto-alvo>/README.md`.
 
 ## Escopo
 
-- Trabalhe somente nos arquivos do projeto solicitado.
+- Trabalhe somente nos arquivos do projeto-alvo solicitado.
 - Preserve alterações pré-existentes do usuário e não modifique arquivos não relacionados.
 
 ## Modo de operar
@@ -23,24 +23,17 @@ Apoiar a análise, o planejamento, a implementação, a padronização e a docum
 - Se a solicitação do usuário tiver uma ambiguidade que possa alterar materialmente o resultado, pare antes de agir e pergunte como seguir.
 - Não faça perguntas para detalhes triviais; quando possível, adote uma suposição razoável e informe-a ao usuário.
 - Use uma skill somente quando o pedido corresponder ao seu escopo; leia o `SKILL.md` completo antes de seguir suas instruções.
-- Prefira as ferramentas, padrões, scripts e dependências já existentes no projeto.
+- Prefira as ferramentas, padrões, scripts e dependências já existentes no projeto-alvo.
 - Faça a menor alteração necessária para atender ao objetivo e evite refatorações não solicitadas.
 - Não execute ações destrutivas, irreversíveis ou fora do escopo sem confirmação explícita.
 
-## Leitura de repositórios
+## Leitura de repositórios de trabalho (projeto-alvo)
 
 - Em buscas amplas, ignore artefatos gerados, dependências instaladas e metadados de ferramentas: `.git`, `.vs`, `bin`, `obj`, `node_modules`, `dist`, `build`, `out`, `coverage`, `TestResults`, `__pycache__`, `.pytest_cache`, `.mypy_cache`, `.gradle`, `target` e `.terraform`.
-- Respeite o `.gitignore` do projeto quando fizer exploração geral e use exclusões equivalentes nas ferramentas de busca.
-- Não ignore por padrão `.agents`, `.codex`, `AGENTS.md`, `README.md`, `docs` ou arquivos de configuração do projeto.
+- Respeite o `.gitignore` do projeto-alvo quando fizer exploração geral e use exclusões equivalentes nas ferramentas de busca.
+- Não ignore por padrão `.agents`, `.codex`, `AGENTS.md`, `README.md`, `docs` ou arquivos de configuração do projeto-alvo.
 - Leia uma pasta ignorada somente quando a tarefa envolver build, cache, dependências, IDE, diagnóstico de ambiente ou outro motivo explícito.
 - Ao investigar uma pasta ignorada, leia apenas os arquivos necessários e não trate artefatos gerados como fonte oficial do código.
-
-## Verificação e entrega
-
-- Após alterações, revise o diff e confirme que não há mudanças não relacionadas.
-- Execute os testes, linters, builds ou outras validações relevantes ao tipo de mudança.
-- Ajuste a profundidade da verificação ao risco e ao impacto da alteração.
-- Na entrega, informe os arquivos alterados, as validações executadas, os resultados e eventuais limitações conhecidas.
 
 ## Segurança e dados
 
