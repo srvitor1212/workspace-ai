@@ -28,10 +28,15 @@ existentes que não façam parte do escopo.
 5. Execute as validações relevantes, priorizando testes focados e depois os
    testes, linters ou builds indicados pelas instruções do projeto. Corrija
    falhas relacionadas à mudança quando isso estiver dentro do escopo.
-6. Ao final da implementação e das validações, atualize a documentação em
-   `projects/<nome-do-projeto>/docs`. Documente o comportamento entregue, a
-   forma de uso ou configuração, decisões importantes, validações executadas e
-   limitações ou migrações necessárias. Siga o formato e o idioma existentes.
+6. Ao final da implementação e das validações, revise a documentação existente em
+   `projects/<nome-do-projeto>/docs` para identificar arquivos afetados pelo
+   comportamento entregue. Crie a documentação necessária e atualize os documentos
+   existentes que tenham se tornado incompletos ou desatualizados. Documente o
+   comportamento entregue, a forma de uso ou configuração, decisões importantes,
+   validações executadas e limitações ou migrações necessárias. Siga o formato e o
+   idioma existentes. Ao alterar um documento existente, mantenha ou acrescente no
+   rodapé a seção `## Histórico de alterações`, com a data em UTC e uma descrição
+   concisa do que mudou; preserve os registros anteriores.
 7. Revise o diff completo e confirme que os arquivos alterados pertencem ao
    pedido. Verifique também formatação, testes e documentação antes de relatar
    a conclusão.
