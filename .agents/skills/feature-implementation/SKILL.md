@@ -35,8 +35,16 @@ existentes que não façam parte do escopo.
    comportamento entregue, a forma de uso ou configuração, decisões importantes,
    validações executadas e limitações ou migrações necessárias. Siga o formato e o
    idioma existentes. Ao alterar um documento existente, mantenha ou acrescente no
-   rodapé a seção `## Histórico de alterações`, com a data em UTC e uma descrição
-   concisa do que mudou; preserve os registros anteriores.
+   rodapé a seção `## Histórico de alterações`, usando este formato e preservando os
+   registros anteriores:
+
+   ```markdown
+   | Data e hora (UTC) | Alteração |
+   | --- | --- |
+   | YYYY-MM-DD HH:mm:ss UTC | Descrição concisa do que mudou. |
+   ```
+
+   Registre o instante em UTC, sempre com hora, minuto e segundo.
 7. Revise o diff completo e confirme que os arquivos alterados pertencem ao
    pedido. Verifique também formatação, testes e documentação antes de relatar
    a conclusão.
