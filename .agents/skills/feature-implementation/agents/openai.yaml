@@ -1,0 +1,7 @@
+interface:
+  display_name: "Implementação de funcionalidades"
+  short_description: "Implementa funcionalidades e documenta o resultado"
+  default_prompt: "Use $feature-implementation para implementar esta funcionalidade, validá-la e atualizar a documentação."
+
+policy:
+  allow_implicit_invocation: true
