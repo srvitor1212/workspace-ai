@@ -7,87 +7,93 @@ metadata:
 
 # Objetivo
 
-Ajudar o usuário a descrever e mepear o fluxo atual do sistema que será alterado e com base nisso criar um documento com detalhes do funcionamento e das alterações a serem feitas para atender essa necessidade.
+Ajude o usuário a entender o fluxo atual da funcionalidade que será alterada e
+a criar um documento com o comportamento atual, a mudança necessária e os
+requisitos para atendê-la.
 
-## Limite da skill
+## Limites da skill
 
-- Não implemente código, não altere testes de produto e não faça refatorações.
-- Se o pedido incluir implementação, conclua o levantamento e deixe explícita a documentação que deve ser usada como entrada da etapa de implementação.
+- Não implemente código, não altere testes do produto e não faça refatorações.
+- Se o pedido também incluir implementação, conclua o levantamento e informe
+  qual documento deve ser usado como entrada para a etapa de implementação.
 
 ## Fluxo de trabalho
 
 1. **Identifique o escopo.** Localize o projeto em
-   `projects/<nome-do-projeto-alvo>`. Leia o `AGENTS.md` da raiz, o
-   `AGENTS.md` do projeto-alvo, o `README.md` e a documentação relevante antes
-   de formular requisitos. Se o projeto-alvo não puder ser identificado ou se
-   houver uma ambiguidade que altere materialmente o resultado, faça uma única
-   pergunta objetiva antes de continuar.
+   `projects/<nome-do-projeto-alvo>`. Antes de definir os requisitos, leia o
+   `AGENTS.md` da raiz, o `AGENTS.md` do projeto-alvo, o `README.md` e a
+   documentação relevante. Se não for possível identificar o projeto-alvo ou
+   houver uma dúvida que possa mudar o resultado de forma relevante, pergunte ao usuário antes de continuar.
 
-2. **Reconstrua o fluxo atual com evidências.** Inspecione somente a área
-   relevante do projeto, priorizando endpoints, telas, casos de uso, serviços,
+2. **Reconstrua o fluxo atual com evidências.** Inspecione somente a parte
+   relevante do projeto. Priorize endpoints, telas, casos de uso, serviços,
    persistência, eventos, integrações, autorização, tratamento de erros e
-   testes existentes. Registre o fluxo passo a passo, os atores envolvidos,
-   entradas e saídas, estados alterados e regras observadas. Diferencie fatos
+   testes existentes. Registre o fluxo passo a passo, os atores, as entradas e
+   saídas, os estados alterados e as regras encontradas. Diferencie fatos
    confirmados no código ou na documentação de inferências.
 
-3. **Defina a mudança.** Separe claramente:
-   - qual é o fluxo atual que será modificado; se não existir coloque "N/A";
-   - objetivo e problema que a funcionalidade resolve;
-   - atores, gatilhos e cenários de uso;
-   - comportamento novo, comportamento mantido e comportamento removido;
-   - dados, estados, permissões, integrações e mensagens afetados;
-   - impactos em compatibilidade, migração, operação e documentação;
-   - fora de escopo, suposições e questões em aberto.
+3. **Defina a mudança.** Descreva com clareza:
+   - o fluxo atual que será alterado; use `N/A` se ele não existir;
+   - o objetivo e o problema que a funcionalidade resolve;
+   - os atores, gatilhos e cenários de uso;
+   - o comportamento novo, o comportamento mantido e o comportamento removido;
+   - os dados, estados, permissões, integrações e mensagens afetados;
+   - os impactos em compatibilidade, migração, operação e documentação;
+   - o que fica fora do escopo, as suposições e as questões em aberto.
 
-4. **Compare o estado atual com o desejado.** Explique as lacunas entre os
-   dois fluxos e aponte os pontos do sistema que serão afetados. Não prescreva
-   uma implementação quando várias soluções atenderem ao mesmo requisito;
-   descreva a necessidade observável e as restrições que realmente existem.
+4. **Compare o estado atual com o desejado.** Explique as diferenças entre os
+   fluxos e indique quais partes do sistema serão afetadas. Não defina uma
+   solução técnica quando mais de uma solução puder atender ao mesmo requisito.
+   Descreva o comportamento que deve ser observado e as restrições que de fato
+   existem.
 
 5. **Especifique os requisitos.** Crie requisitos funcionais (`RF-001`,
    `RF-002`, ...) e não funcionais (`RNF-001`, `RNF-002`, ...). Cada requisito
-   deve ser atômico, necessário, sem ambiguidade e verificável. Sempre que
-   possível, inclua condição ou gatilho, comportamento esperado, resultado e
-   regra de negócio. Para requisitos não funcionais, inclua métrica, limite,
-   contexto e forma de verificação; se o valor ainda não for conhecido,
-   registre-o como pendência em vez de usar adjetivos vagos como “rápido” ou
-   “seguro”.
+   deve tratar de um único assunto, ser necessário, claro e verificável. Sempre
+   que possível, informe a condição ou o gatilho, o comportamento esperado, o
+   resultado e a regra de negócio. Para requisitos não funcionais, informe a
+   métrica, o limite, o contexto e como verificar. Se algum valor ainda não for
+   conhecido, registre uma pendência em vez de usar termos vagos, como “rápido”
+   ou “seguro”.
 
-6. **Relacione a validação.** Para cada requisito, escreva critérios de
-   aceitação observáveis e, quando útil, cenários no formato:
-   `Dado ... Quando ... Então ...`. Cubra caminho feliz, validações, erros,
-   permissões, estados limítrofes e compatibilidade somente quando forem
-   pertinentes ao fluxo. Relacione cada requisito à evidência do fluxo atual ou
-   à decisão que originou a mudança.
+6. **Defina como validar.** Para cada requisito, escreva critérios de
+   aceitação observáveis e, quando for útil, cenários neste formato:
+   `Dado ... Quando ... Então ...`. Cubra o caminho principal, validações,
+   erros, permissões, casos de limite e compatibilidade somente quando forem
+   relevantes para o fluxo. Relacione cada requisito à evidência do fluxo atual
+   ou à decisão que motivou a mudança.
 
-7. **Documente o resultado.** Crie um arquivo em `projects/<nome-do-projeto-alvo>/   docs/features`;
-   O label do arquivo deve ser `feat-req-{aaaammdd-hhmmss}-{descrição breve}`;
-   O documento deve conter, no mínimo:
+7. **Documente o resultado.** Crie ou atualize um arquivo em
+   `projects/<nome-do-projeto-alvo>/docs/features`. Use o nome
+   `feat-req-{aaaammdd-hhmmss}-{descricao-breve}.md`, em que
+   `{descricao-breve}` é uma descrição curta em minúsculas, com palavras
+   separadas por hífen. O documento deve conter, no mínimo:
    - contexto, objetivo e escopo;
    - fluxo atual, com evidências e incertezas;
    - fluxo desejado e comparação das mudanças;
    - requisitos funcionais;
    - requisitos não funcionais;
    - critérios de aceitação e rastreabilidade;
-   - fora de escopo, suposições e questões em aberto;
-   - impactos, dependências, migrações ou decisões pendentes;
-   - histórico de alterações, com data e hora em UTC, se o documento já
+   - itens fora do escopo, suposições e questões em aberto;
+   - impactos, dependências, migrações e decisões pendentes;
+   - histórico de alterações, com data e hora em UTC, caso o documento já
      existir ou for revisado.
 
-   Ao alterar um documento existente, preserve o histórico anterior e acrescente
-   uma linha à seção `## Histórico de alterações` neste formato:
+   Ao atualizar um documento existente, preserve o histórico anterior e
+   acrescente uma linha à seção `## Histórico de alterações` neste formato:
 
    ```markdown
    | Data e hora (UTC) | Alteração |
    | --- | --- |
-   | YYYY-MM-DD HH:mm:ss UTC | Descrição concisa do levantamento ou revisão. |
+   | YYYY-MM-DD HH:mm:ss UTC | Descrição curta do levantamento ou da revisão. |
    ```
 
-8. **Faça uma revisão de qualidade.** Confirme que cada requisito tem um único
-   propósito, possui critério de aceitação, não contradiz o fluxo ou outro
-   requisito, está ligado ao objetivo da feature e não contém decisão técnica
-   sem justificativa. Revise também se nenhuma informação sensível foi copiada
-   para a documentação e se a alteração ficou restrita ao projeto-alvo.
+8. **Revise a qualidade.** Confirme que cada requisito trata de um único
+   assunto, tem critério de aceitação, não contradiz o fluxo nem outro
+   requisito, está ligado ao objetivo da funcionalidade e não contém uma
+   decisão técnica sem justificativa. Verifique também que nenhuma informação
+   sensível foi copiada para a documentação e que as alterações ficaram
+   restritas ao projeto-alvo.
 
 ## Estrutura recomendada para os requisitos
 
@@ -97,17 +103,18 @@ Use uma tabela ou seções equivalentes, conforme a convenção do projeto:
 | --- | --- | --- | --- |
 | RF-001 | O sistema deve ... | Dado ... Quando ... Então ... | Arquivo, tela, regra ou decisão |
 
-Para cada `RNF`, prefira explicitar:
+Para cada `RNF`, prefira a estrutura abaixo:
 
-`O sistema deve [comportamento mensurável] sob [contexto], com verificação por [método].`
+`O sistema deve [comportamento mensurável] em [contexto], com verificação por [método].`
 
-Categorias possíveis incluem desempenho, segurança, disponibilidade,
-acessibilidade, observabilidade, compatibilidade, privacidade e
-manutenibilidade. Inclua somente categorias que tenham relação com a feature.
+As categorias possíveis incluem desempenho, segurança, disponibilidade,
+acessibilidade, observabilidade, compatibilidade, privacidade e facilidade de
+manutenção. Inclua apenas as categorias relacionadas à funcionalidade.
 
 ## Entrega
 
 Informe o caminho do documento criado ou atualizado, um resumo das principais
-decisões, as questões em aberto e as evidências consultadas. Não relate uma
-feature como pronta para implementação quando houver uma pendência que impeça
-definir seu comportamento; destaque essa pendência para decisão do usuário.
+decisões, as questões em aberto e as evidências consultadas. Não informe que a
+funcionalidade está pronta para implementação se existir uma pendência que
+impeça definir seu comportamento. Nesse caso, destaque a pendência para decisão
+do usuário.
