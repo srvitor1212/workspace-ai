@@ -5,23 +5,14 @@ metadata:
   short-description: Levanta requisitos para uma funcionalidade
 ---
 
-# Levantamento de requisitos de funcionalidades
+# Objetivo
 
-Conduza uma etapa de descoberta que transforme uma solicitação de mudança em
-requisitos claros, verificáveis e rastreáveis. O resultado deve permitir que
-outra pessoa implemente e valide a funcionalidade sem precisar redescobrir o
-fluxo atual.
+Ajudar o usuário a descrever e mepear o fluxo atual do sistema que será alterado e com base nisso criar um documento com detalhes do funcionamento e das alterações a serem feitas para atender essa necessidade.
 
 ## Limite da skill
 
-- Analise o comportamento existente e especifique o comportamento desejado.
-- Produza ou atualize a documentação de requisitos do projeto-alvo.
 - Não implemente código, não altere testes de produto e não faça refatorações.
-- Não invente regras, metas de desempenho ou integrações. Quando uma decisão
-  for necessária e não estiver disponível, registre-a como suposição ou
-  questão em aberto.
-- Se o pedido incluir implementação, conclua o levantamento e deixe explícita a
-  documentação que deve ser usada como entrada da etapa de implementação.
+- Se o pedido incluir implementação, conclua o levantamento e deixe explícita a documentação que deve ser usada como entrada da etapa de implementação.
 
 ## Fluxo de trabalho
 
@@ -39,12 +30,8 @@ fluxo atual.
    entradas e saídas, estados alterados e regras observadas. Diferencie fatos
    confirmados no código ou na documentação de inferências.
 
-   Em buscas amplas, respeite o `.gitignore` e ignore artefatos gerados,
-   dependências e caches, como `.git`, `bin`, `obj`, `node_modules`, `dist`,
-   `build`, `coverage` e equivalentes.
-
 3. **Defina a mudança.** Separe claramente:
-
+   - qual é o fluxo atual que será modificado; se não existir coloque "N/A";
    - objetivo e problema que a funcionalidade resolve;
    - atores, gatilhos e cenários de uso;
    - comportamento novo, comportamento mantido e comportamento removido;
@@ -73,12 +60,9 @@ fluxo atual.
    pertinentes ao fluxo. Relacione cada requisito à evidência do fluxo atual ou
    à decisão que originou a mudança.
 
-7. **Documente o resultado.** Prefira a convenção já existente em
-   `projects/<nome-do-projeto-alvo>/docs`. Se não houver uma convenção,
-   crie o documento em
-   `projects/<nome-do-projeto-alvo>/docs/requisitos/<slug-da-feature>.md`.
+7. **Documente o resultado.** Crie um arquivo em `projects/<nome-do-projeto-alvo>/   docs/features`;
+   O label do arquivo deve ser `feat-req-{aaaammdd-hhmmss}-{descrição breve}`;
    O documento deve conter, no mínimo:
-
    - contexto, objetivo e escopo;
    - fluxo atual, com evidências e incertezas;
    - fluxo desejado e comparação das mudanças;
