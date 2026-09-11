@@ -1,6 +1,6 @@
 ---
 name: feature-requirements
-description: Analisa o fluxo atual de uma funcionalidade, identifica mudanças de comportamento e produz requisitos funcionais e não funcionais testáveis para um projeto-alvo. Use antes da implementação; não implemente código.
+description: Analisa o fluxo atual de uma funcionalidade, resolve com o usuário as dúvidas que afetam seu comportamento e produz requisitos funcionais e não funcionais testáveis para um projeto-alvo. Use antes da implementação; não implemente código.
 metadata:
   short-description: Levanta requisitos para uma funcionalidade
 ---
@@ -39,15 +39,29 @@ requisitos para atendê-la.
    - o comportamento novo, o comportamento mantido e o comportamento removido;
    - os dados, estados, permissões, integrações e mensagens afetados;
    - os impactos em compatibilidade, migração, operação e documentação;
-   - o que fica fora do escopo, as suposições e as questões em aberto.
+   - o que fica fora do escopo e as suposições que precisam ser validadas.
 
-4. **Compare o estado atual com o desejado.** Explique as diferenças entre os
+4. **Resolva as dúvidas antes de documentar.** Identifique as dúvidas que
+   possam deixar indefinidos o comportamento, o escopo, uma regra de negócio,
+   os dados, as permissões, as integrações, o tratamento de erros, os critérios
+   de aceitação ou uma métrica não funcional. Primeiro, procure a resposta no
+   código e na documentação. Se a dúvida continuar, apresente todas as dúvidas
+   ao usuário em uma única mensagem. Para cada uma, informe o contexto ou a
+   evidência, as opções conhecidas, se houver, e o impacto de cada resposta.
+
+   Não crie ou atualize o documento de requisitos, não defina requisitos finais
+   e não informe que a funcionalidade está pronta para implementação enquanto
+   houver uma dessas dúvidas. Depois da resposta do usuário, registre a escolha
+   como uma decisão, com data e hora em UTC, origem e impacto. Atualize os
+   fluxos, requisitos e critérios de aceitação afetados pela decisão.
+
+5. **Compare o estado atual com o desejado.** Explique as diferenças entre os
    fluxos e indique quais partes do sistema serão afetadas. Não defina uma
    solução técnica quando mais de uma solução puder atender ao mesmo requisito.
    Descreva o comportamento que deve ser observado e as restrições que de fato
    existem.
 
-5. **Especifique os requisitos.** Crie requisitos funcionais (`RF-001`,
+6. **Especifique os requisitos.** Crie requisitos funcionais (`RF-001`,
    `RF-002`, ...) e não funcionais (`RNF-001`, `RNF-002`, ...). Cada requisito
    deve tratar de um único assunto, ser necessário, claro e verificável. Sempre
    que possível, informe a condição ou o gatilho, o comportamento esperado, o
@@ -56,26 +70,27 @@ requisitos para atendê-la.
    conhecido, registre uma pendência em vez de usar termos vagos, como “rápido”
    ou “seguro”.
 
-6. **Defina como validar.** Para cada requisito, escreva critérios de
+7. **Defina como validar.** Para cada requisito, escreva critérios de
    aceitação observáveis e, quando for útil, cenários neste formato:
    `Dado ... Quando ... Então ...`. Cubra o caminho principal, validações,
    erros, permissões, casos de limite e compatibilidade somente quando forem
    relevantes para o fluxo. Relacione cada requisito à evidência do fluxo atual
    ou à decisão que motivou a mudança.
 
-7. **Documente o resultado.** Crie ou atualize um arquivo em
+8. **Documente o resultado.** Crie ou atualize um arquivo em
    `projects/<nome-do-projeto-alvo>/docs/features`. Use o nome
    `feat-req-{aaaammdd-hhmmss}-{descricao-breve}.md`, em que
    `{descricao-breve}` é uma descrição curta em minúsculas, com palavras
    separadas por hífen. O documento deve conter, no mínimo:
    - contexto, objetivo e escopo;
-   - fluxo atual, com evidências e incertezas;
+   - fluxo atual, com evidências;
    - fluxo desejado e comparação das mudanças;
    - requisitos funcionais;
    - requisitos não funcionais;
    - critérios de aceitação e rastreabilidade;
-   - itens fora do escopo, suposições e questões em aberto;
-   - impactos, dependências, migrações e decisões pendentes;
+   - decisões tomadas, com origem e impacto;
+   - itens fora do escopo e suposições validadas;
+   - impactos, dependências e migrações;
    - histórico de alterações, com data e hora em UTC, caso o documento já
      existir ou for revisado.
 
@@ -88,12 +103,25 @@ requisitos para atendê-la.
    | YYYY-MM-DD HH:mm:ss UTC | Descrição curta do levantamento ou da revisão. |
    ```
 
-8. **Revise a qualidade.** Confirme que cada requisito trata de um único
+   Registre cada decisão na seção `## Decisões tomadas` neste formato:
+
+   ```markdown
+   | ID | Data e hora (UTC) | Decisão | Origem | Impacto |
+   | --- | --- | --- | --- |
+   | DEC-001 | YYYY-MM-DD HH:mm:ss UTC | Decisão adotada. | Usuário, código ou documentação | Requisitos e fluxos afetados. |
+   ```
+
+   Se a decisão vier do usuário, registre-a como `Usuário`. Não apresente uma
+   inferência como se fosse uma decisão do usuário.
+
+9. **Revise a qualidade.** Confirme que cada requisito trata de um único
    assunto, tem critério de aceitação, não contradiz o fluxo nem outro
    requisito, está ligado ao objetivo da funcionalidade e não contém uma
    decisão técnica sem justificativa. Verifique também que nenhuma informação
    sensível foi copiada para a documentação e que as alterações ficaram
-   restritas ao projeto-alvo.
+   restritas ao projeto-alvo. Confirme que não há dúvidas pendentes que possam
+   alterar o comportamento da funcionalidade e que todas as escolhas do usuário
+   estão registradas como decisões.
 
 ## Estrutura recomendada para os requisitos
 
@@ -113,8 +141,8 @@ manutenção. Inclua apenas as categorias relacionadas à funcionalidade.
 
 ## Entrega
 
-Informe o caminho do documento criado ou atualizado, um resumo das principais
-decisões, as questões em aberto e as evidências consultadas. Não informe que a
-funcionalidade está pronta para implementação se existir uma pendência que
-impeça definir seu comportamento. Nesse caso, destaque a pendência para decisão
-do usuário.
+Depois de resolver todas as dúvidas que afetam o comportamento, informe o
+caminho do documento criado ou atualizado, um resumo das principais decisões e
+as evidências consultadas. Se o usuário ainda não responder a uma dúvida, não
+crie nem atualize o documento. Informe as dúvidas necessárias para continuar e
+deixe claro que a funcionalidade não está pronta para implementação.
