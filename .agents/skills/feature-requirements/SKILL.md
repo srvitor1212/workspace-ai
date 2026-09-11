@@ -103,13 +103,23 @@ requisitos para atendê-la.
    | YYYY-MM-DD HH:mm:ss UTC | Descrição curta do levantamento ou da revisão. |
    ```
 
-   Registre cada decisão na seção `## Decisões tomadas` neste formato:
+   Crie a seção `## Decisões tomadas` depois de `## Requisitos não funcionais`
+   e antes de `## Impactos, dependências e migrações`. A seção deve ficar fora
+   de blocos de código e seguir este formato completo:
 
    ```markdown
+   ## Decisões tomadas
+
    | ID | Data e hora (UTC) | Decisão | Origem | Impacto |
    | --- | --- | --- | --- |
    | DEC-001 | YYYY-MM-DD HH:mm:ss UTC | Decisão adotada. | Usuário, código ou documentação | Requisitos e fluxos afetados. |
    ```
+
+   Use uma única linha por decisão. Não inclua quebras de linha nas células e
+   substitua `|` no texto por vírgula ou `\|`, para não quebrar a tabela. Ao
+   atualizar um documento que já tenha essa seção, mantenha o cabeçalho e o
+   separador existentes e acrescente somente as novas decisões. Não crie uma
+   segunda seção ou uma segunda linha de cabeçalho.
 
    Se a decisão vier do usuário, registre-a como `Usuário`. Não apresente uma
    inferência como se fosse uma decisão do usuário.
@@ -121,7 +131,10 @@ requisitos para atendê-la.
    sensível foi copiada para a documentação e que as alterações ficaram
    restritas ao projeto-alvo. Confirme que não há dúvidas pendentes que possam
    alterar o comportamento da funcionalidade e que todas as escolhas do usuário
-   estão registradas como decisões.
+   estão registradas como decisões. Verifique também que há apenas uma seção
+   `## Decisões tomadas`, que ela está fora de blocos de código, fica entre as
+   seções de requisitos e impactos e contém uma tabela com cabeçalho, separador
+   e uma linha para cada decisão.
 
 ## Estrutura recomendada para os requisitos
 
