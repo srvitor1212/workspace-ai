@@ -20,10 +20,11 @@ requisitos para atendê-la.
 ## Fluxo de trabalho
 
 1. **Identifique o escopo.** Localize o projeto em
-   `projects/<nome-do-projeto-alvo>`. Antes de definir os requisitos, leia o
-   `AGENTS.md` da raiz, o `AGENTS.md` do projeto-alvo, o `README.md` e a
-   documentação relevante. Se não for possível identificar o projeto-alvo ou
-   houver uma dúvida que possa mudar o resultado de forma relevante, pergunte ao usuário antes de continuar.
+   `projects/<nome-do-projeto-alvo>` e aplique as instruções e convenções já
+   identificadas para ele. Consulte somente a documentação ou os trechos
+   necessários para entender a funcionalidade. Se não for possível identificar
+   o projeto-alvo ou houver uma dúvida que possa mudar o resultado de forma
+   relevante, pergunte ao usuário antes de continuar.
 
 2. **Reconstrua o fluxo atual com evidências.** Inspecione somente a parte
    relevante do projeto. Priorize endpoints, telas, casos de uso, serviços,

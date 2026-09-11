@@ -10,7 +10,7 @@ Apoiar a análise, o planejamento, a implementação, a padronização e a docum
 - A documentação de cada projeto-alvo deve ficar em `projects/<nome-do-projeto-alvo>/docs`.
 - As skills locais do repositório devem ficar em `.agents/skills`.
 - Arquivos de configuração, agentes e regras do Codex podem ficar em `.codex/`.
-- Procure por convenções e padrões de cada repositório de trabalho em: `projects/<nome-do-projeto-alvo>/AGENTS.md` e `projects/<nome-do-projeto-alvo>/README.md`.
+- Depois de identificar o projeto-alvo, leia o `AGENTS.md` dele, quando existir. Consulte o `README.md` e a documentação de forma dirigida, somente quando acrescentarem contexto necessário à tarefa; use títulos, buscas e trechos relevantes, sem releitura de arquivos já presentes no contexto.
 
 ## Escopo
 

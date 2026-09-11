@@ -28,10 +28,11 @@ funcionalidade sem precisar rediscutir decisões técnicas ou de escopo. O plano
 ## Fluxo de trabalho
 
 1. **Identifique as entradas e as convenções.** Localize o projeto em
-   `projects/<nome-do-projeto-alvo>`. Leia o `AGENTS.md` da raiz, o
-   `AGENTS.md` e o `README.md` do projeto, o documento de requisitos escolhido
-   e a documentação relevante. Registre o caminho relativo e o título do
-   documento de requisitos no plano.
+   `projects/<nome-do-projeto-alvo>`, aplique as instruções e convenções já
+   identificadas para ele e leia o documento de requisitos escolhido. Consulte
+   somente a documentação ou os trechos necessários para fundamentar decisões
+   técnicas. Registre o caminho relativo e o título do documento de requisitos
+   no plano.
 
 2. **Valide a prontidão dos requisitos.** Confirme que os requisitos
    funcionais, não funcionais, critérios de aceitação, decisões e itens fora do
