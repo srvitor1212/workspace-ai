@@ -1,7 +1,0 @@
-interface:
-  display_name: "Levantamento de requisitos"
-  short_description: "Levanta requisitos funcionais e não funcionais"
-  default_prompt: "Use $feature-requirements para analisar o fluxo atual e especificar os requisitos da funcionalidade."
-
-policy:
-  allow_implicit_invocation: true

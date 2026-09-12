@@ -1,0 +1,7 @@
+interface:
+  display_name: "Implementação de código"
+  short_description: "Refinar requisitos e criar ou modificar código no projeto."
+  default_prompt: "Use $code-implementation para entender e refinar a solicitação, esclarecer requisitos e impactos necessários e, então, implementar a criação, alteração, correção ou refatoração de código."
+
+policy:
+  allow_implicit_invocation: true

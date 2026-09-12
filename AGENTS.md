@@ -10,7 +10,7 @@ Apoiar a análise, o planejamento, a implementação, a padronização e a docum
 - A documentação de cada projeto-alvo deve ficar em `projects/<nome-do-projeto-alvo>/docs`.
 - As skills locais do repositório devem ficar em `.agents/skills`.
 - Arquivos de configuração, agentes e regras do Codex podem ficar em `.codex/`.
-- Depois de identificar o projeto-alvo, leia o `AGENTS.md` dele, quando existir. Consulte o `README.md` e a documentação de forma dirigida, somente quando acrescentarem contexto necessário à tarefa; use títulos, buscas e trechos relevantes, sem releitura de arquivos já presentes no contexto.
+- Depois de identificar o projeto-alvo, leia o `AGENTS.md` e `README.md` dele, quando existir.
 
 ## Escopo
 
@@ -20,7 +20,7 @@ Apoiar a análise, o planejamento, a implementação, a padronização e a docum
 ## Modo de operar
 
 - Entenda a solicitação, identifique o projeto-alvo e procure skills aplicáveis.
-- Se a solicitação do usuário tiver uma ambiguidade que possa alterar materialmente o resultado, pare antes de agir e pergunte como seguir.
+- Se a solicitação do usuário tiver ambiguidades que possam alterar materialmente o resultado, antes de agir tire as dúvidas com ele de forma objetiva.
 - Não faça perguntas para detalhes triviais; quando possível, adote uma suposição razoável e informe-a ao usuário.
 - Use uma skill somente quando o pedido corresponder ao seu escopo; leia o `SKILL.md` completo antes de seguir suas instruções.
 - Prefira as ferramentas, padrões, scripts e dependências já existentes no projeto-alvo.
@@ -29,11 +29,12 @@ Apoiar a análise, o planejamento, a implementação, a padronização e a docum
 
 ## Leitura de repositórios de trabalho (projeto-alvo)
 
-- Em buscas amplas, ignore artefatos gerados, dependências instaladas e metadados de ferramentas: `.git`, `.vs`, `bin`, `obj`, `node_modules`, `dist`, `build`, `out`, `coverage`, `TestResults`, `__pycache__`, `.pytest_cache`, `.mypy_cache`, `.gradle`, `target` e `.terraform`.
+- Em buscas amplas, ignore artefatos gerados, dependências instaladas e metadados de ferramentas como: `.git`, `.vs`, `bin`, `obj`, `node_modules`, `dist`, `build`, `out`, `coverage`, `TestResults`, `__pycache__`, `.pytest_cache`, `.mypy_cache`, `.gradle`, `target` e `.terraform`.
 - Respeite o `.gitignore` do projeto-alvo quando fizer exploração geral e use exclusões equivalentes nas ferramentas de busca.
 - Não ignore por padrão `.agents`, `.codex`, `AGENTS.md`, `README.md`, `docs` ou arquivos de configuração do projeto-alvo.
 - Leia uma pasta ignorada somente quando a tarefa envolver build, cache, dependências, IDE, diagnóstico de ambiente ou outro motivo explícito.
 - Ao investigar uma pasta ignorada, leia apenas os arquivos necessários e não trate artefatos gerados como fonte oficial do código.
+- Consulte o a documentação do projeto-alvo de forma dirigida, somente quando acrescentarem contexto necessário à tarefa; use títulos, buscas e trechos relevantes, sem releitura de arquivos já presentes no contexto.
 
 ## Segurança e dados
 
