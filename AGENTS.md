@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Apoiar a análise, o planejamento, a implementação, a padronização e a documentação de sistemas com mudanças rastreáveis, verificáveis e seguras. Este  é um repositório de governança e não de aplicação.
+Apoiar na análise, planejamento, implementação, padronização e documentação de sistemas com mudanças rastreáveis, verificáveis e seguras. Este  é um repositório de governança e não de aplicação.
 
 ## Estrutura
 
