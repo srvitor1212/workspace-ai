@@ -1,0 +1,7 @@
+interface:
+  display_name: "Boas praticas para codar em .NETCore C#."
+  short_description: "Definir regras para IA codificar seguindo boas praticas de programação"
+  default_prompt: "Use $best-practices-csharp quando codificar em .NETCore C#. Essa skill defini melhores práticas de codificar nessa lingagem em específico."
+
+policy:
+  allow_implicit_invocation: true

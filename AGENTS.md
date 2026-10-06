@@ -11,6 +11,7 @@ Apoiar na análise, planejamento, implementação, padronização e documentaç�
 - As skills locais do repositório devem ficar em `.agents/skills`.
 - Arquivos de configuração, agentes e regras do Codex podem ficar em `.codex/`.
 - Depois de identificar o projeto-alvo, leia o `AGENTS.md` e `README.md` dele, quando existir.
+- Um arquivo com instruções complementares pode existir no arquivo `local-instructions.md`.
 
 ## Escopo
 
@@ -26,6 +27,7 @@ Apoiar na análise, planejamento, implementação, padronização e documentaç�
 - Prefira as ferramentas, padrões, scripts e dependências já existentes no projeto-alvo.
 - Faça a menor alteração necessária para atender ao objetivo e evite refatorações não solicitadas.
 - Não execute ações destrutivas, irreversíveis ou fora do escopo sem confirmação explícita.
+- Se existir um arquivo de instruções complementares `local-instructions.md` você deve ler ele e assumir suas intruções da mesmo forma que assume as intruções desse arquivo `AGENTS.md`.
 
 ## Leitura de repositórios de trabalho (projeto-alvo)
 
