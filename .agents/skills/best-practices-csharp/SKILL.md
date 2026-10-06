@@ -1,19 +1,19 @@
 ---
 name: best-practices-csharp
-description: Instruir a IA das melhores práticas de codificalção na linguagem C#.
+description: Orientar a IA sobre convenções e boas práticas de implementação em C#.
 metadata:
-  short-description: Define práticas e decições de como codificar na linguagem.
+  short-description: Define convenções e decisões de implementação em C#.
 ---
 
-# Melhores práticas de programação
+# Boas práticas de programação em C#
 
 ## Objetivo
 
-Definir as boas práticas de codificação. O código é gerado por IA mas deve ser de fácil compreensão para humanos.
+Definir convenções de implementação em C#. O código gerado por IA deve ser idiomático, claro e fácil de manter por pessoas.
 
 ## Padrões gerais
 
-- Procure colocar uma linha em branco entre cada comando. Exemplo:
+- Separe etapas lógicas distintas com uma linha em branco. Não insira linhas em branco entre instruções que formam uma única operação. Exemplo:
 ```csharp
 private async Task<Result<BaseResponse>> Sample(
     Command command,
@@ -31,7 +31,7 @@ private async Task<Result<BaseResponse>> Sample(
 }
 ```
 
-- Prefira usar "sealed record", "sealed class" internas ao invés de tuplas.
+- Quando o retorno tiver significado próprio ou for usado em vários pontos, prefira um tipo nomeado a uma tupla. Use `sealed record` para representar dados cujo valor é definido pelos componentes; use `sealed class` quando o tipo precisar de identidade própria ou comportamento mutável. Declare o tipo no escopo apropriado ao seu uso.
 
 Exemplo para evitar:
 ```csharp
@@ -43,7 +43,7 @@ Exemplo para seguir:
 private async Task<CarInfo> GetInfo(Query query, CancellationToken cancellationToken)
 ```
 
-- Em IF procure usar a condiçao "se verdadeiro".
+- Prefira condições positivas que expressem diretamente o caso tratado. Evite negações duplas e nomes de predicados negativos, pois tornam expressões booleanas mais difíceis de ler.
 
 Exemplo para evitar:
 ```csharp
@@ -56,3 +56,5 @@ Exemplo para seguir:
 if (query.EnumType == MyEnum.Done) { }
 if (IsValidType(query)) { }
 ```
+
+As condições dos exemplos devem representar a mesma regra de negócio para que a transformação preserve o comportamento. Por exemplo, `query.EnumType != MyEnum.Canceled` só deve ser reescrita como uma comparação positiva quando o caso desejado estiver definido com precisão; ela não é necessariamente equivalente a `query.EnumType == MyEnum.Done`.
